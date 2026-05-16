@@ -360,78 +360,82 @@ button {
 
 @media (max-width: 520px) {
   .title-layer {
-    width: 84%;
+    width: 74%;
     max-width: 360px;
-    top: 7%;
+    top: 6.6%;
   }
 
   .seal {
-    width: 54px;
-    height: 54px;
-    max-width: 54px;
-    max-height: 54px;
-    background-size: 520px 260px;
-    background-position: -229px -31px;
+    width: 10.8vw;
+    height: 10.8vw;
+    max-width: 64px;
+    max-height: 64px;
+    min-width: 42px;
+    min-height: 42px;
+    background-size: 578px 289px;
+    background-position: -255px -34px;
   }
 
   .title-layer h1 {
-    margin-top: 24px;
-    font-size: 30px;
+    margin-top: 4.4vw;
+    font-size: clamp(26px, 7.2vw, 38px);
     line-height: 1.18;
     font-weight: 400;
   }
 
   .title-layer p {
-    margin-top: 16px;
-    font-size: 15px;
+    margin-top: 2.3vw;
+    font-size: clamp(14px, 3.6vw, 19px);
     line-height: 1.35;
   }
 
   .title-layer .ornament {
-    width: 68%;
+    width: 66%;
     max-width: 250px;
-    margin-top: 14px;
+    margin-top: 2.1vw;
   }
 
   .time-layer {
-    top: 58.8%;
-    left: 6.4%;
-    width: 48%;
-    max-width: 190px;
+    top: 58.6%;
+    left: 6.8%;
+    width: 43%;
+    max-width: 210px;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
   }
 
   .time-icon {
-    width: 22px;
-    height: 22px;
-    max-width: 22px;
-    max-height: 22px;
-    flex: 0 0 22px;
-    background-size: 520px 260px;
-    background-position: -46px -30px;
+    width: 5.4vw;
+    height: 5.4vw;
+    max-width: 30px;
+    max-height: 30px;
+    min-width: 22px;
+    min-height: 22px;
+    flex: 0 0 5.4vw;
+    background-size: 580px 290px;
+    background-position: -51px -34px;
   }
 
   .time-layer h2 {
-    margin-left: 7px;
-    font-size: 26px;
+    margin-left: 1.7vw;
+    font-size: clamp(24px, 7.1vw, 36px);
     line-height: 1;
   }
 
   .time-layer p {
     flex: 0 0 100%;
-    margin-top: 9px;
-    font-size: 13px;
-    line-height: 1.55;
+    margin-top: 2vw;
+    font-size: clamp(13px, 3.5vw, 18px);
+    line-height: 1.52;
   }
 
   .icon-layer {
-    left: 9%;
-    right: 9%;
-    bottom: max(48px, 13%);
-    gap: 10px;
-    max-width: 330px;
+    left: 7.4%;
+    right: 7.4%;
+    bottom: max(48px, 12.7%);
+    gap: 2.8vw;
+    max-width: 370px;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -439,33 +443,37 @@ button {
 
   .practice-icon,
   .scroll-icon {
-    width: 34px;
-    height: 34px;
-    max-width: 34px;
-    max-height: 34px;
-    flex: 0 0 34px;
-    background-size: 520px 260px;
-    background-position: -229px -9px;
+    width: 10.6vw;
+    height: 10.6vw;
+    max-width: 56px;
+    max-height: 56px;
+    min-width: 40px;
+    min-height: 40px;
+    flex: 0 0 10.6vw;
+    background-size: 610px 305px;
+    background-position: -268px -11px;
   }
 
   .enter-gem {
-    width: 26px;
-    height: 24px;
-    max-width: 26px;
-    max-height: 24px;
-    flex: 0 0 24px;
-    margin-bottom: 5px;
-    background-size: 520px 260px;
-    background-position: -247px -33px;
+    width: 6.8vw;
+    height: 6vw;
+    max-width: 36px;
+    max-height: 32px;
+    min-width: 26px;
+    min-height: 23px;
+    flex: 0 0 6vw;
+    margin-bottom: 1.2vw;
+    background-size: 590px 295px;
+    background-position: -280px -38px;
   }
 
   .enter-button span:not(.sprite) {
-    font-size: 13px;
+    font-size: clamp(13px, 3.5vw, 18px);
     line-height: 1.12;
   }
 
   .enter-button strong {
-    font-size: 18px;
+    font-size: clamp(18px, 4.9vw, 26px);
     line-height: 1.12;
   }
 
@@ -475,22 +483,24 @@ button {
   }
 
   .nav-item {
-    width: 78px;
-    max-width: 78px;
+    width: 22vw;
+    max-width: 100px;
+    min-width: 78px;
   }
 
   .enter-button {
-    width: 86px;
-    max-width: 86px;
+    width: 24vw;
+    max-width: 112px;
+    min-width: 88px;
   }
 
   .nav-item strong {
-    font-size: 14px;
+    font-size: clamp(14px, 4vw, 20px);
     line-height: 1.15;
   }
 
   .nav-item small {
-    font-size: 12px;
+    font-size: clamp(11px, 3vw, 15px);
   }
 
   .blessing-layer {
