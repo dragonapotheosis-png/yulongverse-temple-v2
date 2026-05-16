@@ -102,7 +102,7 @@ button {
 }
 
 .title-layer {
-  top: 48px;
+  top: 52px;
   left: 50%;
   width: 330px;
   max-width: 330px;
@@ -114,7 +114,7 @@ button {
 
 .title-layer h1 {
   position: absolute;
-  top: 54px;
+  top: 65px;
   left: 50%;
   width: 330px;
   margin: 0;
@@ -129,7 +129,7 @@ button {
 
 .title-layer p {
   position: absolute;
-  top: 117px;
+  top: 124px;
   left: 50%;
   width: 260px;
   margin: 0;
@@ -141,7 +141,7 @@ button {
 
 .ornament {
   position: absolute;
-  top: 91px;
+  top: 105px;
   left: 50%;
   transform: translateX(-50%);
   display: grid;
@@ -177,15 +177,15 @@ button {
 }
 
 .seal {
-  width: 58px;
-  height: 58px;
-  max-width: 58px;
-  max-height: 58px;
+  width: 48px;
+  height: 48px;
+  max-width: 48px;
+  max-height: 48px;
 }
 
 .time-layer {
-  left: 36px;
-  top: 455px;
+  left: 28px;
+  top: 505px;
   width: 180px;
   max-width: 180px;
   text-align: left;
@@ -290,7 +290,7 @@ button {
 .enter-button {
   position: absolute;
   left: 50%;
-  top: -72px;
+  top: 24px;
   width: 120px;
   transform: translateX(-50%);
   display: flex;
@@ -382,45 +382,45 @@ button {
 
 @media (max-width: 520px) {
   .title-layer {
-    top: calc(48 / 844 * 100svh);
-    width: calc(330 / 390 * 100%);
+    top: 52px;
+    width: 330px;
     max-width: 330px;
   }
 
   .seal {
-    width: calc(58 / 390 * 100vw);
-    height: calc(58 / 390 * 100vw);
-    max-width: 58px;
-    max-height: 58px;
+    width: 48px;
+    height: 48px;
+    max-width: 48px;
+    max-height: 48px;
     min-width: 48px;
     min-height: 48px;
   }
 
   .title-layer h1 {
-    top: calc(54 / 844 * 100svh);
-    width: calc(330 / 390 * 100vw);
-    font-size: min(34px, calc(34 / 390 * 100vw));
+    top: 65px;
+    width: 330px;
+    font-size: 34px;
     line-height: 1.18;
     font-weight: 400;
   }
 
   .title-layer p {
-    top: calc(117 / 844 * 100svh);
-    width: calc(260 / 390 * 100vw);
-    font-size: min(16px, calc(16 / 390 * 100vw));
+    top: 124px;
+    width: 260px;
+    font-size: 16px;
     line-height: 1.35;
   }
 
   .title-layer .ornament {
-    top: calc(91 / 844 * 100svh);
-    width: calc(250 / 390 * 100vw);
+    top: 105px;
+    width: 250px;
     max-width: 250px;
   }
 
   .time-layer {
-    top: calc(455 / 844 * 100svh);
-    left: calc(36 / 390 * 100%);
-    width: calc(180 / 390 * 100%);
+    top: 505px;
+    left: 28px;
+    width: 180px;
     max-width: 180px;
     display: flex;
     flex-wrap: wrap;
@@ -439,21 +439,21 @@ button {
 
   .time-layer h2 {
     margin-left: 8px;
-    font-size: min(30px, calc(30 / 390 * 100vw));
+    font-size: 30px;
     line-height: 1;
   }
 
   .time-layer p {
     flex: 0 0 100%;
     margin-top: 9px;
-    font-size: min(15px, calc(15 / 390 * 100vw));
+    font-size: 15px;
     line-height: 1.6;
   }
 
   .icon-layer {
     left: 0;
     right: 0;
-    bottom: calc(82 / 844 * 100svh);
+    bottom: 82px;
     height: 120px;
     display: block;
   }
@@ -502,7 +502,7 @@ button {
   }
 
   .enter-button {
-    top: -72px;
+    top: 24px;
     width: 120px;
     max-width: 120px;
     min-width: 120px;
@@ -518,7 +518,7 @@ button {
   }
 
   .blessing-layer {
-    bottom: calc(34 / 844 * 100svh);
+    bottom: 34px;
   }
 }
 
