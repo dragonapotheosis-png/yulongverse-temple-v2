@@ -150,18 +150,18 @@ button {
   opacity: 0.86;
 }
 
-.sprite {
-  display: inline-block;
-  background-repeat: no-repeat;
-  background-size: 800px 400px;
+.icon-img {
+  display: block;
+  object-fit: contain;
+  object-position: center;
+  flex: 0 0 auto;
 }
 
 .seal {
   width: 4.25rem;
   height: 4.25rem;
-  background-image: url("../ui/与龙同行 神庙.png");
-  background-position: -352px -47px;
-  filter: none;
+  max-width: 4.25rem;
+  max-height: 4.25rem;
 }
 
 .time-layer {
@@ -189,12 +189,11 @@ button {
 }
 
 .time-icon {
-  width: 2.25rem;
-  height: 2.25rem;
+  width: 28px;
+  height: 28px;
   vertical-align: -0.25rem;
-  background-image: url("../ui/白天.png");
-  background-position: -70px -43px;
-  filter: none;
+  max-width: 28px;
+  max-height: 28px;
 }
 
 .time-rule {
@@ -251,22 +250,13 @@ button {
 
 .practice-icon,
 .scroll-icon {
-  width: 3.2rem;
-  height: 3.2rem;
+  width: 40px;
+  height: 40px;
+  max-width: 40px;
+  max-height: 40px;
   border: 0;
   border-radius: 0;
-  background-size: 800px 400px;
   opacity: 0.72;
-}
-
-.practice-icon {
-  background-image: url("../ui/今日修行.png");
-  background-position: -352px -14px;
-}
-
-.scroll-icon {
-  background-image: url("../ui/卷轴阁.png");
-  background-position: -352px -18px;
 }
 
 .enter-button {
@@ -277,7 +267,7 @@ button {
   padding: 0;
 }
 
-.enter-button span:not(.sprite) {
+.enter-button > span {
   color: rgba(244, 226, 178, 0.72);
   font-size: clamp(0.82rem, 2.5vw, 1.05rem);
 }
@@ -289,12 +279,11 @@ button {
 }
 
 .enter-gem {
-  width: 2rem;
-  height: 1.8rem;
+  width: 32px;
+  height: 32px;
+  max-width: 32px;
+  max-height: 32px;
   margin-bottom: 0.15rem;
-  background-image: url("../ui/点击香炉 进入神庙.png");
-  background-position: -380px -52px;
-  filter: none;
   opacity: 0.72;
 }
 
@@ -372,8 +361,6 @@ button {
     max-height: 64px;
     min-width: 42px;
     min-height: 42px;
-    background-size: 578px 289px;
-    background-position: -255px -34px;
   }
 
   .title-layer h1 {
@@ -406,15 +393,13 @@ button {
   }
 
   .time-icon {
-    width: 5.4vw;
-    height: 5.4vw;
-    max-width: 30px;
-    max-height: 30px;
-    min-width: 22px;
-    min-height: 22px;
-    flex: 0 0 5.4vw;
-    background-size: 580px 290px;
-    background-position: -51px -34px;
+    width: 28px;
+    height: 28px;
+    max-width: 28px;
+    max-height: 28px;
+    min-width: 28px;
+    min-height: 28px;
+    flex: 0 0 28px;
   }
 
   .time-layer h2 {
@@ -443,31 +428,27 @@ button {
 
   .practice-icon,
   .scroll-icon {
-    width: 10.6vw;
-    height: 10.6vw;
-    max-width: 56px;
-    max-height: 56px;
+    width: 40px;
+    height: 40px;
+    max-width: 40px;
+    max-height: 40px;
     min-width: 40px;
     min-height: 40px;
-    flex: 0 0 10.6vw;
-    background-size: 610px 305px;
-    background-position: -268px -11px;
+    flex: 0 0 40px;
   }
 
   .enter-gem {
-    width: 6.8vw;
-    height: 6vw;
-    max-width: 36px;
+    width: 32px;
+    height: 32px;
+    max-width: 32px;
     max-height: 32px;
-    min-width: 26px;
-    min-height: 23px;
-    flex: 0 0 6vw;
+    min-width: 32px;
+    min-height: 32px;
+    flex: 0 0 32px;
     margin-bottom: 1.2vw;
-    background-size: 590px 295px;
-    background-position: -280px -38px;
   }
 
-  .enter-button span:not(.sprite) {
+  .enter-button > span {
     font-size: clamp(13px, 3.5vw, 18px);
     line-height: 1.12;
   }

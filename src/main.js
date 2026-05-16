@@ -4,32 +4,28 @@
     text: "天地初醒，\n雾气仍在殿前流动。",
     background: "./assets/morning-temple.png.png",
     audio: "./audio/清晨森林.mp3",
-    icon: "./ui/清晨.png",
-    iconPosition: "-68px -42px",
+    icon: "./ui/icons/icon-dawn.png",
   },
   day: {
     title: "白天",
     text: "光落在殿前，\n万物都在安静生长。",
     background: "./assets/day-temple.png.png",
     audio: "./audio/白天神庙.mp3",
-    icon: "./ui/白天.png",
-    iconPosition: "-70px -43px",
+    icon: "./ui/icons/icon-day.png",
   },
   dusk: {
     title: "黄昏",
     text: "余光停在石阶上，\n天地正在慢慢入夜。",
     background: "./assets/dusk-temple.png.png",
     audio: "./audio/黄昏神庙.mp3",
-    icon: "./ui/黄昏.png",
-    iconPosition: "-68px -42px",
+    icon: "./ui/icons/icon-dusk.png",
   },
   night: {
     title: "深夜",
     text: "天地仍未沉睡，\n请让心先安静下来。",
     background: "./assets/night-temple.png.png",
     audio: "./audio/夜晚森林.mp3",
-    icon: "./ui/深夜.png",
-    iconPosition: "-68px -42px",
+    icon: "./ui/icons/icon-night.png",
   },
 };
 
@@ -82,8 +78,7 @@ function setBackground(period) {
 function setCopy(period) {
   titleNode.textContent = period.title;
   textNode.innerHTML = period.text.replace("\n", "<br />");
-  timeIcon.style.backgroundImage = `url("${period.icon}")`;
-  timeIcon.style.backgroundPosition = period.iconPosition;
+  timeIcon.src = period.icon;
 }
 
 function createAudio(src) {
