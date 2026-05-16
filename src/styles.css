@@ -522,3 +522,159 @@ button {
   }
 }
 
+@media (max-width: 430px), (pointer: coarse) {
+  .stage {
+    width: 100vw;
+    max-width: 430px;
+    height: 100svh;
+  }
+
+  .title-layer {
+    top: 48px;
+    left: 50%;
+    width: 330px;
+    max-width: 330px;
+    transform: translateX(-50%);
+  }
+
+  .seal {
+    width: 58px;
+    height: 58px;
+    min-width: 58px;
+    min-height: 58px;
+    max-width: 58px;
+    max-height: 58px;
+  }
+
+  .title-layer h1 {
+    top: 54px;
+    width: 330px;
+    font-size: 34px;
+    line-height: 1.12;
+    letter-spacing: 4px;
+  }
+
+  .title-layer .ornament {
+    top: 91px;
+    width: 250px;
+  }
+
+  .title-layer p {
+    top: 117px;
+    width: 260px;
+    font-size: 16px;
+    line-height: 1.35;
+  }
+
+  .time-layer {
+    left: 36px;
+    top: 455px;
+    width: 180px;
+    max-width: 180px;
+  }
+
+  .time-icon {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    min-height: 28px;
+    max-width: 28px;
+    max-height: 28px;
+    flex: 0 0 28px;
+  }
+
+  .time-layer h2 {
+    margin-left: 8px;
+    font-size: 30px;
+    line-height: 1;
+  }
+
+  .time-layer p {
+    margin-top: 9px;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .icon-layer {
+    left: 0;
+    right: 0;
+    bottom: 82px;
+    height: 120px;
+    display: block;
+  }
+
+  .nav-item.practice {
+    left: 42px;
+    bottom: 0;
+  }
+
+  .nav-item.scrolls {
+    right: 42px;
+    bottom: 0;
+  }
+
+  .practice-icon,
+  .scroll-icon {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    max-width: 44px;
+    max-height: 44px;
+    flex: 0 0 44px;
+  }
+
+  .nav-item {
+    width: 90px;
+    min-width: 90px;
+    max-width: 90px;
+    gap: 8px;
+  }
+
+  .nav-item strong {
+    font-size: 18px;
+    line-height: 1.15;
+  }
+
+  .nav-item small {
+    font-size: 14px;
+    line-height: 1.35;
+  }
+
+  .enter-button {
+    left: 50%;
+    top: -72px;
+    width: 120px;
+    min-width: 120px;
+    max-width: 120px;
+    transform: translateX(-50%);
+  }
+
+  .enter-gem {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;
+    max-width: 32px;
+    max-height: 32px;
+  }
+
+  .enter-button > span {
+    font-size: 15px;
+    line-height: 1.12;
+  }
+
+  .enter-button strong {
+    font-size: 22px;
+    line-height: 1.12;
+  }
+
+  .blessing-layer {
+    bottom: 34px;
+  }
+
+  .blessing-layer p {
+    font-size: 14px;
+  }
+}
+
