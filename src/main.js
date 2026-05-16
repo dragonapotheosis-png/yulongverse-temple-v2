@@ -66,7 +66,7 @@ function preloadAssets() {
 }
 
 function setBackground(period) {
-  hiddenBackground.style.backgroundImage = `url("${period.background}")`;
+  hiddenBackground.src = period.background;
   hiddenBackground.classList.add("is-visible");
   visibleBackground.classList.remove("is-visible");
 
