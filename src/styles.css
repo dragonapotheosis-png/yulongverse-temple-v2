@@ -101,7 +101,11 @@ button {
   top: 5.8%;
   left: 50%;
   width: 82%;
+  max-width: 42rem;
   transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .title-layer h1 {
@@ -164,6 +168,7 @@ button {
   left: 6.6%;
   top: 58.2%;
   width: 47%;
+  max-width: 21rem;
   text-align: left;
 }
 
@@ -209,6 +214,8 @@ button {
   grid-template-columns: 1fr 1fr 1fr;
   align-items: end;
   gap: 1.35rem;
+  max-width: 45rem;
+  margin: 0 auto;
 }
 
 .nav-item,
@@ -221,8 +228,9 @@ button {
 }
 
 .nav-item {
-  display: grid;
-  justify-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 0.5rem;
   opacity: 0.96;
 }
@@ -261,8 +269,9 @@ button {
 }
 
 .enter-button {
-  display: grid;
-  justify-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 0.28rem;
   padding: 0;
 }
@@ -347,82 +356,112 @@ button {
 
 @media (max-width: 520px) {
   .title-layer {
-    width: 86%;
+    width: 84%;
+    max-width: 360px;
     top: 5.8%;
   }
 
   .seal {
-    width: 3.9rem;
-    height: 3.9rem;
-    background-size: 630px 315px;
-    background-position: -277px -37px;
+    width: 72px;
+    height: 72px;
+    max-width: 72px;
+    max-height: 72px;
+    background-size: 612px 306px;
+    background-position: -270px -36px;
   }
 
   .title-layer h1 {
-    margin-top: 1.38rem;
-    font-size: clamp(2.2rem, 9.2vw, 3.2rem);
+    margin-top: 22px;
+    font-size: 36px;
+    line-height: 1.16;
   }
 
   .title-layer p {
-    margin-top: 0.86rem;
-    font-size: clamp(1rem, 4.4vw, 1.32rem);
+    margin-top: 14px;
+    font-size: 18px;
+    line-height: 1.35;
   }
 
   .title-layer .ornament {
     width: 68%;
-    margin-top: 0.82rem;
+    max-width: 250px;
+    margin-top: 14px;
   }
 
   .time-layer {
     top: 57.8%;
     left: 6.4%;
-    width: 55%;
+    width: 56%;
+    max-width: 240px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
   }
 
   .time-icon {
-    width: 2.6rem;
-    height: 2.6rem;
-    background-size: 680px 340px;
-    background-position: -59px -36px;
+    width: 28px;
+    height: 28px;
+    max-width: 28px;
+    max-height: 28px;
+    flex: 0 0 28px;
+    background-size: 620px 310px;
+    background-position: -55px -36px;
   }
 
   .time-layer h2 {
-    font-size: clamp(2rem, 8.4vw, 2.65rem);
+    margin-left: 8px;
+    font-size: 32px;
+    line-height: 1;
   }
 
   .time-layer p {
-    font-size: clamp(1rem, 4.2vw, 1.24rem);
-    line-height: 1.58;
+    flex: 0 0 100%;
+    margin-top: 10px;
+    font-size: 16px;
+    line-height: 1.55;
   }
 
   .icon-layer {
-    left: 7%;
-    right: 7%;
-    bottom: 13.4%;
-    gap: 0.7rem;
+    left: 8%;
+    right: 8%;
+    bottom: max(48px, 12.5%);
+    gap: 12px;
+    max-width: 360px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
   }
 
   .practice-icon,
   .scroll-icon {
-    width: 4rem;
-    height: 4rem;
-    background-size: 670px 335px;
-    background-position: -294px -12px;
+    width: 48px;
+    height: 48px;
+    max-width: 48px;
+    max-height: 48px;
+    flex: 0 0 48px;
+    background-size: 640px 320px;
+    background-position: -282px -11px;
   }
 
   .enter-gem {
-    width: 2.8rem;
-    height: 2.45rem;
-    background-size: 670px 335px;
-    background-position: -319px -43px;
+    width: 36px;
+    height: 36px;
+    max-width: 36px;
+    max-height: 36px;
+    flex: 0 0 36px;
+    margin-bottom: 8px;
+    background-size: 620px 310px;
+    background-position: -294px -39px;
   }
 
   .enter-button span:not(.sprite) {
-    font-size: clamp(0.94rem, 3.8vw, 1.08rem);
+    font-size: 18px;
+    line-height: 1.12;
   }
 
   .enter-button strong {
-    font-size: clamp(1.18rem, 5.1vw, 1.55rem);
+    font-size: 30px;
+    line-height: 1.08;
   }
 
   .nav-item small {
@@ -430,8 +469,27 @@ button {
     line-height: 1.35;
   }
 
+  .nav-item {
+    width: 86px;
+    max-width: 86px;
+  }
+
+  .enter-button {
+    width: 112px;
+    max-width: 112px;
+  }
+
+  .nav-item strong {
+    font-size: 18px;
+    line-height: 1.15;
+  }
+
+  .nav-item small {
+    font-size: 12px;
+  }
+
   .blessing-layer {
-    bottom: 4.4%;
+    bottom: 18px;
   }
 }
 
