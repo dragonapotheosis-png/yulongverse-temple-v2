@@ -349,14 +349,14 @@ button {
 
 @media (max-width: 520px) {
   .title-layer {
-    width: 74%;
+    width: 76%;
     max-width: 360px;
-    top: 6.6%;
+    top: 6.3%;
   }
 
   .seal {
-    width: 10.8vw;
-    height: 10.8vw;
+    width: 10.4vw;
+    height: 10.4vw;
     max-width: 64px;
     max-height: 64px;
     min-width: 42px;
@@ -364,28 +364,28 @@ button {
   }
 
   .title-layer h1 {
-    margin-top: 4.4vw;
-    font-size: clamp(26px, 7.2vw, 38px);
+    margin-top: 4.2vw;
+    font-size: clamp(30px, 7.4vw, 42px);
     line-height: 1.18;
     font-weight: 400;
   }
 
   .title-layer p {
-    margin-top: 2.3vw;
-    font-size: clamp(14px, 3.6vw, 19px);
+    margin-top: 2.45vw;
+    font-size: clamp(15px, 3.55vw, 20px);
     line-height: 1.35;
   }
 
   .title-layer .ornament {
-    width: 66%;
+    width: 64%;
     max-width: 250px;
     margin-top: 2.1vw;
   }
 
   .time-layer {
-    top: 58.6%;
+    top: 59.2%;
     left: 6.8%;
-    width: 43%;
+    width: 42%;
     max-width: 210px;
     display: flex;
     flex-wrap: wrap;
@@ -404,23 +404,23 @@ button {
 
   .time-layer h2 {
     margin-left: 1.7vw;
-    font-size: clamp(24px, 7.1vw, 36px);
+    font-size: clamp(26px, 6.8vw, 36px);
     line-height: 1;
   }
 
   .time-layer p {
     flex: 0 0 100%;
-    margin-top: 2vw;
-    font-size: clamp(13px, 3.5vw, 18px);
+    margin-top: 1.9vw;
+    font-size: clamp(14px, 3.35vw, 18px);
     line-height: 1.52;
   }
 
   .icon-layer {
-    left: 7.4%;
-    right: 7.4%;
-    bottom: max(48px, 12.7%);
-    gap: 2.8vw;
-    max-width: 370px;
+    left: 8%;
+    right: 8%;
+    bottom: max(48px, 10.8%);
+    gap: 2.5vw;
+    max-width: 360px;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -449,12 +449,12 @@ button {
   }
 
   .enter-button > span {
-    font-size: clamp(13px, 3.5vw, 18px);
+    font-size: clamp(14px, 3.45vw, 18px);
     line-height: 1.12;
   }
 
   .enter-button strong {
-    font-size: clamp(18px, 4.9vw, 26px);
+    font-size: clamp(19px, 4.8vw, 26px);
     line-height: 1.12;
   }
 
@@ -464,28 +464,28 @@ button {
   }
 
   .nav-item {
-    width: 22vw;
+    width: 21.5vw;
     max-width: 100px;
     min-width: 78px;
   }
 
   .enter-button {
-    width: 24vw;
+    width: 23vw;
     max-width: 112px;
     min-width: 88px;
   }
 
   .nav-item strong {
-    font-size: clamp(14px, 4vw, 20px);
+    font-size: clamp(16px, 4.05vw, 21px);
     line-height: 1.15;
   }
 
   .nav-item small {
-    font-size: clamp(11px, 3vw, 15px);
+    font-size: clamp(12px, 3vw, 15px);
   }
 
   .blessing-layer {
-    bottom: 18px;
+    bottom: 4.5%;
   }
 }
 
