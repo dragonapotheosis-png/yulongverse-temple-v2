@@ -94,11 +94,11 @@ button {
   position: absolute;
   z-index: 3;
   text-align: center;
-  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.82);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.72);
 }
 
 .title-layer {
-  top: 5.8%;
+  top: 7.2%;
   left: 50%;
   width: 82%;
   max-width: 42rem;
@@ -109,18 +109,18 @@ button {
 }
 
 .title-layer h1 {
-  margin: 1.65rem 0 0;
+  margin: 1.45rem 0 0;
   color: var(--soft-gold);
-  font-size: clamp(2.35rem, 7.2vw, 4.75rem);
+  font-size: clamp(2.05rem, 6.4vw, 4.25rem);
   font-weight: 400;
   letter-spacing: 0;
   line-height: 1.12;
 }
 
 .title-layer p {
-  margin: 1.05rem 0 0;
-  color: rgba(244, 226, 178, 0.82);
-  font-size: clamp(1.08rem, 3.1vw, 1.95rem);
+  margin: 0.95rem 0 0;
+  color: rgba(244, 226, 178, 0.72);
+  font-size: clamp(0.98rem, 2.7vw, 1.65rem);
   letter-spacing: 0;
 }
 
@@ -157,18 +157,18 @@ button {
 }
 
 .seal {
-  width: 5.1rem;
-  height: 5.1rem;
+  width: 4.25rem;
+  height: 4.25rem;
   background-image: url("../ui/与龙同行 神庙.png");
   background-position: -352px -47px;
-  filter: drop-shadow(0 0 16px rgba(219, 164, 62, 0.38));
+  filter: none;
 }
 
 .time-layer {
   left: 6.6%;
   top: 58.2%;
-  width: 47%;
-  max-width: 21rem;
+  width: 42%;
+  max-width: 18rem;
   text-align: left;
 }
 
@@ -176,25 +176,25 @@ button {
   display: inline-block;
   margin: 0 0 0 0.42rem;
   color: var(--soft-gold);
-  font-size: clamp(2.15rem, 7vw, 3.8rem);
+  font-size: clamp(1.7rem, 5.4vw, 3rem);
   font-weight: 400;
   line-height: 1;
 }
 
 .time-layer p {
   margin: 0.85rem 0 0;
-  color: rgba(244, 226, 178, 0.86);
-  font-size: clamp(1.08rem, 3.7vw, 1.72rem);
+  color: rgba(244, 226, 178, 0.72);
+  font-size: clamp(0.9rem, 2.8vw, 1.28rem);
   line-height: 1.65;
 }
 
 .time-icon {
-  width: 2.95rem;
-  height: 2.95rem;
-  vertical-align: -0.42rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  vertical-align: -0.25rem;
   background-image: url("../ui/白天.png");
   background-position: -70px -43px;
-  filter: drop-shadow(0 0 12px rgba(232, 184, 82, 0.28));
+  filter: none;
 }
 
 .time-rule {
@@ -203,7 +203,7 @@ button {
   gap: 0.55rem;
   align-items: center;
   margin-top: 0.95rem;
-  opacity: 0.86;
+  opacity: 0.58;
 }
 
 .icon-layer {
@@ -232,30 +232,31 @@ button {
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  opacity: 0.96;
+  opacity: 0.72;
 }
 
 .nav-item strong,
 .enter-button strong {
   color: var(--soft-gold);
-  font-size: clamp(1.1rem, 3.6vw, 1.7rem);
-  font-weight: 600;
+  font-size: clamp(0.98rem, 3vw, 1.32rem);
+  font-weight: 400;
   line-height: 1.15;
 }
 
 .nav-item small {
-  color: rgba(244, 226, 178, 0.76);
-  font-size: clamp(0.78rem, 2.45vw, 1.08rem);
+  color: rgba(244, 226, 178, 0.5);
+  font-size: clamp(0.72rem, 2.1vw, 0.92rem);
   white-space: nowrap;
 }
 
 .practice-icon,
 .scroll-icon {
-  width: 4.9rem;
-  height: 4.9rem;
-  border: 1px solid rgba(240, 220, 165, 0.52);
-  border-radius: 50%;
+  width: 3.2rem;
+  height: 3.2rem;
+  border: 0;
+  border-radius: 0;
   background-size: 800px 400px;
+  opacity: 0.72;
 }
 
 .practice-icon {
@@ -277,32 +278,34 @@ button {
 }
 
 .enter-button span:not(.sprite) {
-  color: rgba(244, 226, 178, 0.9);
-  font-size: clamp(1rem, 3.2vw, 1.4rem);
+  color: rgba(244, 226, 178, 0.72);
+  font-size: clamp(0.82rem, 2.5vw, 1.05rem);
 }
 
 .enter-button strong {
-  font-size: clamp(1.35rem, 4.4vw, 2.05rem);
-  text-shadow: 0 0 18px rgba(218, 168, 77, 0.38), 0 2px 16px rgba(0, 0, 0, 0.86);
+  font-size: clamp(1rem, 3.1vw, 1.38rem);
+  font-weight: 400;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.72);
 }
 
 .enter-gem {
-  width: 3rem;
-  height: 2.65rem;
-  margin-bottom: 0.35rem;
+  width: 2rem;
+  height: 1.8rem;
+  margin-bottom: 0.15rem;
   background-image: url("../ui/点击香炉 进入神庙.png");
   background-position: -380px -52px;
-  filter: drop-shadow(0 0 12px rgba(214, 161, 65, 0.28));
+  filter: none;
+  opacity: 0.72;
 }
 
 .enter-button::after {
   content: "";
   width: 1.8rem;
   height: 2.4rem;
-  margin-top: 0.58rem;
+  margin-top: 0.35rem;
   background: linear-gradient(var(--gold), transparent);
   clip-path: polygon(45% 0, 55% 0, 55% 64%, 77% 45%, 83% 55%, 50% 100%, 17% 55%, 23% 45%, 45% 64%);
-  opacity: 0.7;
+  opacity: 0.44;
 }
 
 .blessing-layer {
@@ -320,7 +323,7 @@ button {
 
 .blessing-layer p {
   margin: 0.6rem 0 0;
-  color: rgba(244, 226, 178, 0.74);
+  color: rgba(244, 226, 178, 0.56);
   font-size: clamp(0.92rem, 2.9vw, 1.25rem);
 }
 
@@ -331,7 +334,8 @@ button {
   margin: 1.05rem auto 0;
   border-radius: 50%;
   background: var(--gold);
-  box-shadow: 0 0 16px rgba(221, 170, 71, 0.7);
+  box-shadow: none;
+  opacity: 0.62;
 }
 
 .audio-state {
@@ -358,27 +362,28 @@ button {
   .title-layer {
     width: 84%;
     max-width: 360px;
-    top: 5.8%;
+    top: 7%;
   }
 
   .seal {
-    width: 72px;
-    height: 72px;
-    max-width: 72px;
-    max-height: 72px;
-    background-size: 612px 306px;
-    background-position: -270px -36px;
+    width: 54px;
+    height: 54px;
+    max-width: 54px;
+    max-height: 54px;
+    background-size: 520px 260px;
+    background-position: -229px -31px;
   }
 
   .title-layer h1 {
-    margin-top: 22px;
-    font-size: 36px;
-    line-height: 1.16;
+    margin-top: 24px;
+    font-size: 30px;
+    line-height: 1.18;
+    font-weight: 400;
   }
 
   .title-layer p {
-    margin-top: 14px;
-    font-size: 18px;
+    margin-top: 16px;
+    font-size: 15px;
     line-height: 1.35;
   }
 
@@ -389,44 +394,44 @@ button {
   }
 
   .time-layer {
-    top: 57.8%;
+    top: 58.8%;
     left: 6.4%;
-    width: 56%;
-    max-width: 240px;
+    width: 48%;
+    max-width: 190px;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
   }
 
   .time-icon {
-    width: 28px;
-    height: 28px;
-    max-width: 28px;
-    max-height: 28px;
-    flex: 0 0 28px;
-    background-size: 620px 310px;
-    background-position: -55px -36px;
+    width: 22px;
+    height: 22px;
+    max-width: 22px;
+    max-height: 22px;
+    flex: 0 0 22px;
+    background-size: 520px 260px;
+    background-position: -46px -30px;
   }
 
   .time-layer h2 {
-    margin-left: 8px;
-    font-size: 32px;
+    margin-left: 7px;
+    font-size: 26px;
     line-height: 1;
   }
 
   .time-layer p {
     flex: 0 0 100%;
-    margin-top: 10px;
-    font-size: 16px;
+    margin-top: 9px;
+    font-size: 13px;
     line-height: 1.55;
   }
 
   .icon-layer {
-    left: 8%;
-    right: 8%;
-    bottom: max(48px, 12.5%);
-    gap: 12px;
-    max-width: 360px;
+    left: 9%;
+    right: 9%;
+    bottom: max(48px, 13%);
+    gap: 10px;
+    max-width: 330px;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -434,34 +439,34 @@ button {
 
   .practice-icon,
   .scroll-icon {
-    width: 48px;
-    height: 48px;
-    max-width: 48px;
-    max-height: 48px;
-    flex: 0 0 48px;
-    background-size: 640px 320px;
-    background-position: -282px -11px;
+    width: 34px;
+    height: 34px;
+    max-width: 34px;
+    max-height: 34px;
+    flex: 0 0 34px;
+    background-size: 520px 260px;
+    background-position: -229px -9px;
   }
 
   .enter-gem {
-    width: 36px;
-    height: 36px;
-    max-width: 36px;
-    max-height: 36px;
-    flex: 0 0 36px;
-    margin-bottom: 8px;
-    background-size: 620px 310px;
-    background-position: -294px -39px;
+    width: 26px;
+    height: 24px;
+    max-width: 26px;
+    max-height: 24px;
+    flex: 0 0 24px;
+    margin-bottom: 5px;
+    background-size: 520px 260px;
+    background-position: -247px -33px;
   }
 
   .enter-button span:not(.sprite) {
-    font-size: 18px;
+    font-size: 13px;
     line-height: 1.12;
   }
 
   .enter-button strong {
-    font-size: 30px;
-    line-height: 1.08;
+    font-size: 18px;
+    line-height: 1.12;
   }
 
   .nav-item small {
@@ -470,17 +475,17 @@ button {
   }
 
   .nav-item {
+    width: 78px;
+    max-width: 78px;
+  }
+
+  .enter-button {
     width: 86px;
     max-width: 86px;
   }
 
-  .enter-button {
-    width: 112px;
-    max-width: 112px;
-  }
-
   .nav-item strong {
-    font-size: 18px;
+    font-size: 14px;
     line-height: 1.15;
   }
 
