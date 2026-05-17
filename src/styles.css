@@ -102,7 +102,7 @@ button {
 }
 
 .title-layer {
-  top: 52px;
+  top: 42px;
   left: 50%;
   width: 330px;
   max-width: 330px;
@@ -114,13 +114,13 @@ button {
 
 .title-layer h1 {
   position: absolute;
-  top: 65px;
+  top: 58px;
   left: 50%;
   width: 330px;
   margin: 0;
   transform: translateX(-50%);
   color: var(--soft-gold);
-  font-size: 34px;
+  font-size: 31px;
   font-weight: 400;
   letter-spacing: 4px;
   line-height: 1.12;
@@ -129,19 +129,19 @@ button {
 
 .title-layer p {
   position: absolute;
-  top: 124px;
+  top: 112px;
   left: 50%;
   width: 260px;
   margin: 0;
   transform: translateX(-50%);
   color: rgba(244, 226, 178, 0.72);
-  font-size: 16px;
+  font-size: 15px;
   letter-spacing: 0;
 }
 
 .ornament {
   position: absolute;
-  top: 105px;
+  top: 96px;
   left: 50%;
   transform: translateX(-50%);
   display: grid;
@@ -177,15 +177,15 @@ button {
 }
 
 .seal {
-  width: 48px;
-  height: 48px;
-  max-width: 48px;
-  max-height: 48px;
+  width: 44px;
+  height: 44px;
+  max-width: 44px;
+  max-height: 44px;
 }
 
 .time-layer {
   left: 28px;
-  top: 505px;
+  top: 486px;
   width: 180px;
   max-width: 180px;
   text-align: left;
@@ -195,7 +195,7 @@ button {
   display: inline-block;
   margin: 0 0 0 8px;
   color: var(--soft-gold);
-  font-size: 30px;
+  font-size: 27px;
   font-weight: 400;
   line-height: 1;
 }
@@ -203,7 +203,7 @@ button {
 .time-layer p {
   margin: 9px 0 0;
   color: rgba(244, 226, 178, 0.72);
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.6;
 }
 
@@ -227,7 +227,7 @@ button {
 .icon-layer {
   left: 0;
   right: 0;
-  bottom: 82px;
+  bottom: 76px;
   height: 120px;
   display: block;
   max-width: none;
@@ -249,7 +249,7 @@ button {
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  opacity: 0.72;
+  opacity: 0.56;
 }
 
 .nav-item.practice {
@@ -265,32 +265,32 @@ button {
 .nav-item strong,
 .enter-button strong {
   color: var(--soft-gold);
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 400;
   line-height: 1.15;
 }
 
 .nav-item small {
   color: rgba(244, 226, 178, 0.5);
-  font-size: 14px;
+  font-size: 12px;
   white-space: nowrap;
 }
 
 .practice-icon,
 .scroll-icon {
-  width: 44px;
-  height: 44px;
-  max-width: 44px;
-  max-height: 44px;
+  width: 34px;
+  height: 34px;
+  max-width: 34px;
+  max-height: 34px;
   border: 0;
   border-radius: 0;
-  opacity: 0.72;
+  opacity: 0.58;
 }
 
 .enter-button {
   position: absolute;
   left: 50%;
-  top: 24px;
+  top: -24px;
   width: 120px;
   transform: translateX(-50%);
   display: flex;
@@ -302,22 +302,22 @@ button {
 
 .enter-button > span {
   color: rgba(244, 226, 178, 0.72);
-  font-size: 15px;
+  font-size: 14px;
 }
 
 .enter-button strong {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 400;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.72);
 }
 
 .enter-gem {
-  width: 32px;
-  height: 32px;
-  max-width: 32px;
-  max-height: 32px;
+  width: 28px;
+  height: 28px;
+  max-width: 28px;
+  max-height: 28px;
   margin-bottom: 0.15rem;
-  opacity: 0.72;
+  opacity: 0.68;
 }
 
 .enter-button::after {
@@ -327,13 +327,13 @@ button {
   margin-top: 0.35rem;
   background: linear-gradient(var(--gold), transparent);
   clip-path: polygon(45% 0, 55% 0, 55% 64%, 77% 45%, 83% 55%, 50% 100%, 17% 55%, 23% 45%, 45% 64%);
-  opacity: 0.44;
+  opacity: 0.28;
 }
 
 .blessing-layer {
   left: 8%;
   right: 8%;
-  bottom: 34px;
+  bottom: 36px;
 }
 
 .blessing-layer .ornament {
@@ -346,7 +346,7 @@ button {
 .blessing-layer p {
   margin: 0.6rem 0 0;
   color: rgba(244, 226, 178, 0.56);
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .blessing-layer b {
@@ -530,7 +530,7 @@ button {
   }
 
   .title-layer {
-    top: 48px;
+    top: 42px;
     left: 50%;
     width: 330px;
     max-width: 330px;
@@ -538,37 +538,37 @@ button {
   }
 
   .seal {
-    width: 58px;
-    height: 58px;
-    min-width: 58px;
-    min-height: 58px;
-    max-width: 58px;
-    max-height: 58px;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    max-width: 44px;
+    max-height: 44px;
   }
 
   .title-layer h1 {
-    top: 54px;
+    top: 58px;
     width: 330px;
-    font-size: 34px;
+    font-size: 31px;
     line-height: 1.12;
     letter-spacing: 4px;
   }
 
   .title-layer .ornament {
-    top: 91px;
+    top: 96px;
     width: 250px;
   }
 
   .title-layer p {
-    top: 117px;
+    top: 112px;
     width: 260px;
-    font-size: 16px;
+    font-size: 15px;
     line-height: 1.35;
   }
 
   .time-layer {
     left: 36px;
-    top: 455px;
+    top: 486px;
     width: 180px;
     max-width: 180px;
   }
@@ -585,20 +585,20 @@ button {
 
   .time-layer h2 {
     margin-left: 8px;
-    font-size: 30px;
+    font-size: 27px;
     line-height: 1;
   }
 
   .time-layer p {
     margin-top: 9px;
-    font-size: 15px;
+    font-size: 14px;
     line-height: 1.6;
   }
 
   .icon-layer {
     left: 0;
     right: 0;
-    bottom: 82px;
+    bottom: 76px;
     height: 120px;
     display: block;
   }
@@ -615,35 +615,36 @@ button {
 
   .practice-icon,
   .scroll-icon {
-    width: 44px;
-    height: 44px;
-    min-width: 44px;
-    min-height: 44px;
-    max-width: 44px;
-    max-height: 44px;
-    flex: 0 0 44px;
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    min-height: 34px;
+    max-width: 34px;
+    max-height: 34px;
+    flex: 0 0 34px;
   }
 
   .nav-item {
     width: 90px;
     min-width: 90px;
     max-width: 90px;
-    gap: 8px;
+    gap: 6px;
+    opacity: 0.56;
   }
 
   .nav-item strong {
-    font-size: 18px;
+    font-size: 15px;
     line-height: 1.15;
   }
 
   .nav-item small {
-    font-size: 14px;
+    font-size: 12px;
     line-height: 1.35;
   }
 
   .enter-button {
     left: 50%;
-    top: -72px;
+    top: -24px;
     width: 120px;
     min-width: 120px;
     max-width: 120px;
@@ -651,30 +652,30 @@ button {
   }
 
   .enter-gem {
-    width: 32px;
-    height: 32px;
-    min-width: 32px;
-    min-height: 32px;
-    max-width: 32px;
-    max-height: 32px;
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    min-height: 28px;
+    max-width: 28px;
+    max-height: 28px;
   }
 
   .enter-button > span {
-    font-size: 15px;
+    font-size: 14px;
     line-height: 1.12;
   }
 
   .enter-button strong {
-    font-size: 22px;
+    font-size: 20px;
     line-height: 1.12;
   }
 
   .blessing-layer {
-    bottom: 34px;
+    bottom: 36px;
   }
 
   .blessing-layer p {
-    font-size: 14px;
+    font-size: 13px;
   }
 }
 
