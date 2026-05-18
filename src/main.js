@@ -1,19 +1,19 @@
 const PERIODS = {
   morning: {
     background: "./assets/baked/morning.png",
-    audio: "./audio/清晨森林.mp3",
+    audio: "./audio/dawn.mp3",
   },
   day: {
     background: "./assets/baked/day.png",
-    audio: "./audio/白天神庙.mp3",
+    audio: "./audio/day.mp3",
   },
   dusk: {
     background: "./assets/baked/dusk.png",
-    audio: "./audio/黄昏神庙.mp3",
+    audio: "./audio/dusk.mp3",
   },
   night: {
     background: "./assets/baked/night.png",
-    audio: "./audio/夜晚森林.mp3",
+    audio: "./audio/night.mp3",
   },
 };
 
@@ -32,6 +32,7 @@ let audioEnabled = false;
 let muted = false;
 let activeAudio = null;
 let fadingAudio = null;
+let currentPreloadLink = null;
 
 function getPeriodKey(date = new Date()) {
   const hour = date.getHours();
@@ -49,28 +50,42 @@ function preloadBackgrounds() {
   });
 }
 
-function createAudio(src) {
+function createAudio(src, preload = "metadata") {
   const audio = new Audio(src);
-  audio.preload = "auto";
+  audio.preload = preload;
   audio.loop = true;
   audio.volume = 0;
   audio.dataset.src = src;
-  audio.load();
   return audio;
 }
 
-function preloadAudio() {
-  Object.values(PERIODS).forEach((period) => {
-    audioCache.set(period.audio, createAudio(period.audio));
-  });
-}
-
-function getAudio(src) {
+function getAudio(src, preload = "metadata") {
   if (!audioCache.has(src)) {
-    audioCache.set(src, createAudio(src));
+    audioCache.set(src, createAudio(src, preload));
   }
 
-  return audioCache.get(src);
+  const audio = audioCache.get(src);
+  if (preload === "auto" && audio.preload !== "auto") {
+    audio.preload = "auto";
+  }
+
+  return audio;
+}
+
+function preloadCurrentAudio(period) {
+  if (currentPreloadLink) {
+    currentPreloadLink.remove();
+  }
+
+  currentPreloadLink = document.createElement("link");
+  currentPreloadLink.rel = "preload";
+  currentPreloadLink.as = "audio";
+  currentPreloadLink.type = "audio/mpeg";
+  currentPreloadLink.href = period.audio;
+  document.head.append(currentPreloadLink);
+
+  const audio = getAudio(period.audio, "auto");
+  audio.load();
 }
 
 function setBackground(period) {
@@ -89,6 +104,7 @@ function applyPeriod(periodKey) {
   activePeriod = periodKey;
   const period = PERIODS[periodKey];
   setBackground(period);
+  preloadCurrentAudio(period);
   switchAudio(period);
 }
 
@@ -135,22 +151,21 @@ async function unlockAudioContext() {
 async function switchAudio(period) {
   if (!audioEnabled || muted || activeAudio?.dataset?.src === period.audio) return;
 
-  const nextAudio = getAudio(period.audio);
+  const nextAudio = getAudio(period.audio, "auto");
   fadingAudio = activeAudio;
   activeAudio = nextAudio;
 
   try {
-    activeAudio.currentTime = activeAudio.currentTime || 0;
     await activeAudio.play();
     fadeVolume(activeAudio, 0.3);
     audioToggle.classList.add("is-on");
-    audioToggle.setAttribute("aria-label", "关闭环境音");
+    audioToggle.setAttribute("aria-label", "Disable ambient audio");
   } catch {
     activeAudio = fadingAudio;
     fadingAudio = null;
     audioEnabled = false;
     audioToggle.classList.remove("is-on");
-    audioToggle.setAttribute("aria-label", "开启环境音");
+    audioToggle.setAttribute("aria-label", "Enable ambient audio");
     return;
   }
 
@@ -172,7 +187,7 @@ async function startAudio() {
   try {
     await unlockAudioContext();
   } catch {
-    // The HTMLAudioElement fallback below still handles browsers without Web Audio unlock.
+    // HTMLAudioElement playback still handles browsers without Web Audio unlock.
   }
 
   await switchAudio(PERIODS[activePeriod || getPeriodKey()]);
@@ -181,7 +196,7 @@ async function startAudio() {
 function stopAudio() {
   muted = true;
   audioToggle.classList.remove("is-on");
-  audioToggle.setAttribute("aria-label", "开启环境音");
+  audioToggle.setAttribute("aria-label", "Enable ambient audio");
 
   if (activeAudio) {
     const audio = activeAudio;
@@ -220,7 +235,6 @@ function startAudioFromPage(event) {
 }
 
 preloadBackgrounds();
-preloadAudio();
 applyPeriod(getPeriodKey());
 tryAutoplay();
 window.setInterval(() => applyPeriod(getPeriodKey()), 30_000);
