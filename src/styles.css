@@ -51,12 +51,12 @@ body {
 .smoke {
   position: absolute;
   left: 50%;
-  top: 61%;
+  top: 54%;
   z-index: 2;
-  width: 90px;
+  width: 72px;
   height: auto;
   transform: translateX(-50%);
-  opacity: 0.35;
+  opacity: 0.32;
   pointer-events: none;
   animation: smokeFloat 6s ease-in-out infinite;
 }
