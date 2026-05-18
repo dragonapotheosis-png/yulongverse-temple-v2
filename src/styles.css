@@ -194,3 +194,62 @@ body {
   color: rgba(241, 223, 170, 0.82);
   border-color: rgba(241, 223, 170, 0.34);
 }
+
+.temple-transition {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.transition-backdrop {
+  position: absolute;
+  inset: 0;
+  background: #030302;
+  opacity: 0;
+  transition: opacity 800ms ease;
+}
+
+.transition-message {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  width: 82%;
+  margin: 0;
+  transform: translateX(-50%) translateY(10px);
+  color: rgba(198, 163, 92, 0.78);
+  font: 400 18px/1.8 "Songti SC", "STSong", "SimSun", serif;
+  letter-spacing: 2px;
+  text-align: center;
+  opacity: 0;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.42);
+  transition:
+    opacity 1000ms ease,
+    transform 1000ms ease;
+}
+
+.stage.is-transitioning .transition-backdrop {
+  opacity: 0.96;
+}
+
+.stage.is-transition-message .transition-message {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  animation: messageBreath 4.8s ease-in-out infinite;
+}
+
+.stage.is-transition-leaving .transition-message {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-4px);
+}
+
+@keyframes messageBreath {
+  0%,
+  100% {
+    opacity: 0.72;
+  }
+
+  50% {
+    opacity: 0.9;
+  }
+}

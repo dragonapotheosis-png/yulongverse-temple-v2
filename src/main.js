@@ -21,6 +21,7 @@ const backgroundA = document.querySelector(".background-a");
 const backgroundB = document.querySelector(".background-b");
 const enterHitbox = document.querySelector("[data-enter]");
 const audioToggle = document.querySelector("[data-audio-toggle]");
+const stage = document.querySelector(".stage");
 
 let activePeriod = "";
 let visibleBackground = backgroundA;
@@ -28,6 +29,8 @@ let hiddenBackground = backgroundB;
 let audioContext = null;
 let currentAudio = null;
 let audioStarted = false;
+let transitionStarted = false;
+let volumeFadeFrame = null;
 
 function getPeriodKey(date = new Date()) {
   const hour = date.getHours();
@@ -176,6 +179,32 @@ async function playCurrentAudio() {
   }
 }
 
+function fadeCurrentVolume(target, duration = 800) {
+  if (!currentAudio) return;
+
+  if (volumeFadeFrame) {
+    cancelAnimationFrame(volumeFadeFrame);
+  }
+
+  const start = currentAudio.volume;
+  const startedAt = performance.now();
+
+  function tick(now) {
+    const progress = Math.min((now - startedAt) / duration, 1);
+    currentAudio.volume = start + (target - start) * progress;
+
+    if (progress < 1) {
+      volumeFadeFrame = requestAnimationFrame(tick);
+      return;
+    }
+
+    currentAudio.volume = target;
+    volumeFadeFrame = null;
+  }
+
+  volumeFadeFrame = requestAnimationFrame(tick);
+}
+
 function stopCurrentAudio() {
   if (!currentAudio) return;
 
@@ -198,8 +227,25 @@ function toggleAudio(event) {
 }
 
 function enterTemple() {
-  playCurrentAudio();
-  window.location.hash = "temple";
+  if (transitionStarted) return;
+
+  transitionStarted = true;
+  enterHitbox.setAttribute("aria-disabled", "true");
+  playCurrentAudio().then(() => fadeCurrentVolume(0.18, 900));
+
+  stage.classList.add("is-transitioning");
+
+  window.setTimeout(() => {
+    stage.classList.add("is-transition-message");
+  }, 800);
+
+  window.setTimeout(() => {
+    stage.classList.add("is-transition-leaving");
+  }, 3600);
+
+  window.setTimeout(() => {
+    window.location.hash = "jiaobei";
+  }, 4500);
 }
 
 function startAudioFromPage(event) {
