@@ -48,6 +48,60 @@ body {
   opacity: 1;
 }
 
+.lantern-glow {
+  position: absolute;
+  z-index: 2;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 190, 90, 0.28) 0%,
+    rgba(255, 160, 60, 0.12) 38%,
+    rgba(255, 160, 60, 0) 72%
+  );
+  opacity: 0.22;
+  pointer-events: none;
+  transform: scale(1);
+  animation: lanternFlicker 4.8s ease-in-out infinite;
+}
+
+.lantern-glow-left {
+  left: 22%;
+  top: 42%;
+}
+
+.lantern-glow-right {
+  left: 77%;
+  top: 42%;
+  animation-delay: 1.3s;
+}
+
+.lantern-glow-center {
+  left: 49%;
+  top: 47%;
+  width: 56px;
+  height: 56px;
+  animation-delay: 0.7s;
+}
+
+@keyframes lanternFlicker {
+  0% {
+    opacity: 0.22;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.38;
+    transform: scale(1.08);
+  }
+
+  100% {
+    opacity: 0.22;
+    transform: scale(1);
+  }
+}
+
 .smoke {
   position: absolute;
   left: 50%;
