@@ -172,3 +172,25 @@ body {
   width: 142px;
   height: 130px;
 }
+
+.audio-toggle {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  z-index: 4;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid rgba(241, 223, 170, 0.22);
+  border-radius: 50%;
+  background: rgba(5, 4, 3, 0.18);
+  color: rgba(241, 223, 170, 0.58);
+  font: 13px/1 "Songti SC", "SimSun", serif;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.audio-toggle.is-on {
+  color: rgba(241, 223, 170, 0.82);
+  border-color: rgba(241, 223, 170, 0.34);
+}
