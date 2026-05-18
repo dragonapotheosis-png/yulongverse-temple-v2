@@ -264,3 +264,203 @@ body {
     transform: translateX(-50%) translateY(-4px);
   }
 }
+
+.jiaobei-page {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: none;
+  overflow-y: auto;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(174, 133, 64, 0.12), transparent 28%),
+    linear-gradient(180deg, rgba(8, 7, 6, 0.92), rgba(3, 3, 3, 0.98));
+  color: rgba(241, 223, 170, 0.86);
+  -webkit-overflow-scrolling: touch;
+}
+
+.stage.is-jiaobei .jiaobei-page {
+  display: block;
+}
+
+.stage.is-jiaobei .hitbox,
+.stage.is-jiaobei .audio-toggle {
+  pointer-events: none;
+}
+
+.inner-sanctum {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.42), transparent 26%, transparent 74%, rgba(0, 0, 0, 0.42)),
+    radial-gradient(ellipse at 50% 34%, rgba(216, 179, 95, 0.1), transparent 42%);
+}
+
+.jiaobei-content {
+  position: relative;
+  min-height: 100%;
+  padding: 78px 28px 42px;
+  text-align: center;
+}
+
+.jiaobei-kicker {
+  margin: 0 0 22px;
+  color: rgba(198, 163, 92, 0.58);
+  font-size: 13px;
+  letter-spacing: 6px;
+}
+
+.jiaobei-content h1 {
+  max-width: 280px;
+  margin: 0 auto 44px;
+  color: rgba(241, 223, 170, 0.88);
+  font: 400 22px/1.7 "Songti SC", "STSong", "SimSun", serif;
+  letter-spacing: 1px;
+}
+
+.jiaobei-cups {
+  position: relative;
+  width: 154px;
+  height: 72px;
+  margin: 0 auto 34px;
+}
+
+.jiaobei-cup {
+  position: absolute;
+  top: 18px;
+  width: 58px;
+  height: 28px;
+  border: 1px solid rgba(198, 163, 92, 0.5);
+  border-radius: 50% 50% 42% 42%;
+  background:
+    radial-gradient(ellipse at 50% 22%, rgba(230, 194, 112, 0.38), transparent 45%),
+    linear-gradient(180deg, rgba(95, 58, 26, 0.92), rgba(31, 20, 13, 0.94));
+  box-shadow: inset 0 -6px 14px rgba(0, 0, 0, 0.36);
+}
+
+.cup-left {
+  left: 14px;
+  transform: rotate(-12deg);
+}
+
+.cup-right {
+  right: 14px;
+  transform: rotate(13deg);
+}
+
+.jiaobei-page.is-casting .cup-left {
+  animation: cupFallLeft 900ms ease-out forwards;
+}
+
+.jiaobei-page.is-casting .cup-right {
+  animation: cupFallRight 900ms ease-out forwards;
+}
+
+@keyframes cupFallLeft {
+  0% {
+    transform: translateY(-10px) rotate(-32deg);
+  }
+
+  100% {
+    transform: translateY(4px) rotate(-12deg);
+  }
+}
+
+@keyframes cupFallRight {
+  0% {
+    transform: translateY(-12px) rotate(34deg);
+  }
+
+  100% {
+    transform: translateY(4px) rotate(13deg);
+  }
+}
+
+.jiaobei-button {
+  min-width: 116px;
+  padding: 11px 28px;
+  border: 1px solid rgba(198, 163, 92, 0.42);
+  border-radius: 999px;
+  background: rgba(8, 7, 6, 0.22);
+  color: rgba(241, 223, 170, 0.86);
+  font: 400 17px/1 "Songti SC", "STSong", "SimSun", serif;
+  letter-spacing: 5px;
+  cursor: pointer;
+}
+
+.jiaobei-button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.jiaobei-result {
+  min-height: 58px;
+  margin: 24px auto 0;
+  color: rgba(241, 223, 170, 0.78);
+  font: 400 18px/1.7 "Songti SC", "STSong", "SimSun", serif;
+  white-space: pre-line;
+}
+
+.fortune-scroll {
+  margin: 26px auto 0;
+  padding: 24px 22px 28px;
+  max-width: 340px;
+  text-align: left;
+  border: 1px solid rgba(198, 163, 92, 0.24);
+  background:
+    linear-gradient(180deg, rgba(77, 52, 26, 0.28), rgba(19, 13, 8, 0.52)),
+    rgba(9, 7, 5, 0.72);
+}
+
+.fortune-scroll.is-visible {
+  animation: scrollReveal 900ms ease forwards;
+}
+
+@keyframes scrollReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fortune-meta {
+  margin: 0 0 8px;
+  color: rgba(198, 163, 92, 0.62);
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+.fortune-scroll h2 {
+  margin: 0;
+  color: rgba(241, 223, 170, 0.92);
+  font: 400 24px/1.35 "Songti SC", "STSong", "SimSun", serif;
+}
+
+.fortune-energy {
+  margin: 8px 0 20px;
+  color: rgba(198, 163, 92, 0.72);
+  font-size: 14px;
+}
+
+.fortune-section {
+  margin-top: 18px;
+}
+
+.fortune-section h3 {
+  margin: 0 0 7px;
+  color: rgba(198, 163, 92, 0.7);
+  font: 400 13px/1.4 "Songti SC", "STSong", "SimSun", serif;
+  letter-spacing: 2px;
+}
+
+.fortune-section p {
+  margin: 0;
+  color: rgba(241, 223, 170, 0.78);
+  font: 400 15px/1.85 "Songti SC", "STSong", "SimSun", serif;
+  white-space: pre-line;
+}

@@ -1,4 +1,4 @@
-const PERIODS = {
+﻿const PERIODS = {
   morning: {
     background: "./assets/baked/morning.png",
     audio: "./audio/dawn.mp3",
@@ -22,6 +22,16 @@ const backgroundB = document.querySelector(".background-b");
 const enterHitbox = document.querySelector("[data-enter]");
 const audioToggle = document.querySelector("[data-audio-toggle]");
 const stage = document.querySelector(".stage");
+const jiaobeiPage = document.querySelector(".jiaobei-page");
+const castJiaobeiButton = document.querySelector("[data-cast-jiaobei]");
+const jiaobeiResult = document.querySelector("[data-jiaobei-result]");
+const fortuneScroll = document.querySelector("[data-fortune-scroll]");
+const fortuneId = document.querySelector("[data-fortune-id]");
+const fortuneTitle = document.querySelector("[data-fortune-title]");
+const fortuneEnergy = document.querySelector("[data-fortune-energy]");
+const fortuneContent = document.querySelector("[data-fortune-content]");
+const fortuneInterpretation = document.querySelector("[data-fortune-interpretation]");
+const fortuneAdvice = document.querySelector("[data-fortune-advice]");
 
 let activePeriod = "";
 let visibleBackground = backgroundA;
@@ -31,6 +41,9 @@ let currentAudio = null;
 let audioStarted = false;
 let transitionStarted = false;
 let volumeFadeFrame = null;
+let fortunes = [];
+let fortuneLoadPromise = null;
+let jiaobeiStarted = false;
 
 function getPeriodKey(date = new Date()) {
   const hour = date.getHours();
@@ -248,6 +261,85 @@ function enterTemple() {
   }, 4500);
 }
 
+async function loadFortunes() {
+  if (fortunes.length) return fortunes;
+
+  if (!fortuneLoadPromise) {
+    fortuneLoadPromise = fetch("./data/fortunes.json")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`fortunes.json ${response.status}`);
+        }
+
+        return response.json();
+      })
+      .then((data) => {
+        fortunes = Array.isArray(data) ? data : [];
+        return fortunes;
+      })
+      .catch((error) => {
+        console.error("[temple-fortune] failed to load fortunes", error);
+        fortunes = [];
+        return fortunes;
+      });
+  }
+
+  return fortuneLoadPromise;
+}
+
+function setText(node, value) {
+  node.textContent = value || "";
+}
+
+function drawFortune() {
+  if (!fortunes.length) {
+    jiaobeiResult.textContent = "\u7b7e\u8bd7\u5c1a\u672a\u5907\u59a5\uff0c\n\u8bf7\u7a0d\u540e\u518d\u6765\u3002";
+    castJiaobeiButton.disabled = false;
+    return;
+  }
+
+  const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
+  setText(fortuneId, fortune.id);
+  setText(fortuneTitle, fortune.title);
+  setText(fortuneEnergy, fortune.energy);
+  setText(fortuneContent, fortune.content);
+  setText(fortuneInterpretation, fortune.interpretation);
+  setText(fortuneAdvice, fortune.advice);
+  fortuneScroll.hidden = false;
+  fortuneScroll.classList.add("is-visible");
+}
+
+async function castJiaobei() {
+  if (jiaobeiStarted) return;
+
+  jiaobeiStarted = true;
+  castJiaobeiButton.disabled = true;
+  jiaobeiPage.classList.add("is-casting");
+  jiaobeiResult.textContent = "";
+  fortuneScroll.hidden = true;
+  fortuneScroll.classList.remove("is-visible");
+
+  await loadFortunes();
+
+  window.setTimeout(() => {
+    jiaobeiResult.textContent = "\u5723\u7b4a\u5df2\u5e94\uff0c\n\u8bf7\u53d6\u4eca\u65e5\u4e4b\u7b7e\u3002";
+  }, 1000);
+
+  window.setTimeout(() => {
+    drawFortune();
+  }, 1850);
+}
+function showJiaobeiPage() {
+  stage.classList.add("is-jiaobei");
+  loadFortunes();
+}
+
+function routeByHash() {
+  if (window.location.hash === "#jiaobei") {
+    showJiaobeiPage();
+  }
+}
+
 function startAudioFromPage(event) {
   if (event.target.closest("[data-audio-toggle]")) return;
   playCurrentAudio();
@@ -264,4 +356,8 @@ window.setInterval(() => {
 
 enterHitbox.addEventListener("click", enterTemple);
 audioToggle.addEventListener("click", toggleAudio);
+castJiaobeiButton.addEventListener("click", castJiaobei);
 document.addEventListener("pointerdown", startAudioFromPage, { once: true, capture: true });
+window.addEventListener("hashchange", routeByHash);
+routeByHash();
+
