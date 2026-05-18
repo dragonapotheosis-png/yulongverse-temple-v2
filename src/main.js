@@ -22,9 +22,12 @@ const backgroundB = document.querySelector(".background-b");
 const enterHitbox = document.querySelector("[data-enter]");
 const audioToggle = document.querySelector("[data-audio-toggle]");
 
+const audioCache = new Map();
+
 let activePeriod = "";
 let visibleBackground = backgroundA;
 let hiddenBackground = backgroundB;
+let audioContext = null;
 let audioEnabled = false;
 let muted = false;
 let activeAudio = null;
@@ -46,11 +49,28 @@ function preloadBackgrounds() {
   });
 }
 
+function createAudio(src) {
+  const audio = new Audio(src);
+  audio.preload = "auto";
+  audio.loop = true;
+  audio.volume = 0;
+  audio.dataset.src = src;
+  audio.load();
+  return audio;
+}
+
 function preloadAudio() {
   Object.values(PERIODS).forEach((period) => {
-    const audio = new Audio(period.audio);
-    audio.preload = "auto";
+    audioCache.set(period.audio, createAudio(period.audio));
   });
+}
+
+function getAudio(src) {
+  if (!audioCache.has(src)) {
+    audioCache.set(src, createAudio(src));
+  }
+
+  return audioCache.get(src);
 }
 
 function setBackground(period) {
@@ -72,20 +92,7 @@ function applyPeriod(periodKey) {
   switchAudio(period);
 }
 
-function enterTemple() {
-  startAudio();
-  window.location.hash = "temple";
-}
-
-function createAudio(src) {
-  const audio = new Audio(src);
-  audio.loop = true;
-  audio.volume = 0;
-  audio.preload = "auto";
-  return audio;
-}
-
-function fadeVolume(audio, target, duration = 1800, onDone) {
+function fadeVolume(audio, target, duration = 1200, onDone) {
   const start = audio.volume;
   const startedAt = performance.now();
 
@@ -105,14 +112,35 @@ function fadeVolume(audio, target, duration = 1800, onDone) {
   requestAnimationFrame(tick);
 }
 
+async function unlockAudioContext() {
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContextClass) return;
+
+  if (!audioContext) {
+    audioContext = new AudioContextClass();
+  }
+
+  if (audioContext.state === "suspended") {
+    await audioContext.resume();
+  }
+
+  const source = audioContext.createBufferSource();
+  const gain = audioContext.createGain();
+  gain.gain.value = 0;
+  source.buffer = audioContext.createBuffer(1, 1, 22050);
+  source.connect(gain).connect(audioContext.destination);
+  source.start(0);
+}
+
 async function switchAudio(period) {
   if (!audioEnabled || muted || activeAudio?.dataset?.src === period.audio) return;
 
+  const nextAudio = getAudio(period.audio);
   fadingAudio = activeAudio;
-  activeAudio = createAudio(period.audio);
-  activeAudio.dataset.src = period.audio;
+  activeAudio = nextAudio;
 
   try {
+    activeAudio.currentTime = activeAudio.currentTime || 0;
     await activeAudio.play();
     fadeVolume(activeAudio, 0.3);
     audioToggle.classList.add("is-on");
@@ -123,12 +151,13 @@ async function switchAudio(period) {
     audioEnabled = false;
     audioToggle.classList.remove("is-on");
     audioToggle.setAttribute("aria-label", "开启环境音");
+    return;
   }
 
-  if (fadingAudio) {
-    fadeVolume(fadingAudio, 0, 1800, () => {
+  if (fadingAudio && fadingAudio !== activeAudio) {
+    fadeVolume(fadingAudio, 0, 1200, () => {
       fadingAudio.pause();
-      fadingAudio.src = "";
+      fadingAudio.currentTime = 0;
       fadingAudio = null;
     });
   }
@@ -137,8 +166,15 @@ async function switchAudio(period) {
 async function startAudio() {
   if (audioEnabled && !muted) return;
 
-  audioEnabled = true;
   muted = false;
+  audioEnabled = true;
+
+  try {
+    await unlockAudioContext();
+  } catch {
+    // The HTMLAudioElement fallback below still handles browsers without Web Audio unlock.
+  }
+
   await switchAudio(PERIODS[activePeriod || getPeriodKey()]);
 }
 
@@ -150,9 +186,8 @@ function stopAudio() {
   if (activeAudio) {
     const audio = activeAudio;
     activeAudio = null;
-    fadeVolume(audio, 0, 900, () => {
+    fadeVolume(audio, 0, 700, () => {
       audio.pause();
-      audio.src = "";
     });
   }
 }
@@ -168,11 +203,28 @@ function toggleAudio(event) {
   startAudio();
 }
 
+function enterTemple() {
+  startAudio();
+  window.location.hash = "temple";
+}
+
+function tryAutoplay() {
+  audioEnabled = true;
+  muted = false;
+  switchAudio(PERIODS[activePeriod || getPeriodKey()]);
+}
+
+function startAudioFromPage(event) {
+  if (event.target.closest("[data-audio-toggle]")) return;
+  startAudio();
+}
+
 preloadBackgrounds();
 preloadAudio();
 applyPeriod(getPeriodKey());
+tryAutoplay();
 window.setInterval(() => applyPeriod(getPeriodKey()), 30_000);
 
 enterHitbox.addEventListener("click", enterTemple);
 audioToggle.addEventListener("click", toggleAudio);
-document.addEventListener("pointerdown", startAudio, { once: true });
+document.addEventListener("pointerdown", startAudioFromPage, { once: true, capture: true });
