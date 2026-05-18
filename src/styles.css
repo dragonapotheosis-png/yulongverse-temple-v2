@@ -222,10 +222,9 @@ body {
   letter-spacing: 2px;
   text-align: center;
   opacity: 0;
+  visibility: hidden;
   text-shadow: 0 1px 10px rgba(0, 0, 0, 0.42);
-  transition:
-    opacity 1000ms ease,
-    transform 1000ms ease;
+  will-change: opacity, transform;
 }
 
 .stage.is-transitioning .transition-backdrop {
@@ -233,23 +232,35 @@ body {
 }
 
 .stage.is-transition-message .transition-message {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-  animation: messageBreath 4.8s ease-in-out infinite;
+  visibility: visible;
+  animation: messageFadeIn 1800ms ease forwards;
 }
 
 .stage.is-transition-leaving .transition-message {
-  opacity: 0;
-  transform: translateX(-50%) translateY(-4px);
+  visibility: visible;
+  animation: messageFadeOut 900ms ease forwards;
 }
 
-@keyframes messageBreath {
-  0%,
-  100% {
-    opacity: 0.72;
+@keyframes messageFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
   }
 
-  50% {
-    opacity: 0.9;
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes messageFadeOut {
+  0% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-4px);
   }
 }
