@@ -48,9 +48,39 @@ body {
   opacity: 1;
 }
 
+.smoke {
+  position: absolute;
+  left: 50%;
+  top: 61%;
+  z-index: 2;
+  width: 90px;
+  height: auto;
+  transform: translateX(-50%);
+  opacity: 0.35;
+  pointer-events: none;
+  animation: smokeFloat 6s ease-in-out infinite;
+}
+
+@keyframes smokeFloat {
+  0% {
+    transform: translateX(-50%) translateY(0) scale(1);
+    opacity: 0.28;
+  }
+
+  50% {
+    transform: translateX(-52%) translateY(-14px) scale(1.05);
+    opacity: 0.42;
+  }
+
+  100% {
+    transform: translateX(-50%) translateY(0) scale(1);
+    opacity: 0.28;
+  }
+}
+
 .hitbox {
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   display: block;
   padding: 0;
   border: 0;
