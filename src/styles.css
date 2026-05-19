@@ -288,6 +288,11 @@ body {
   pointer-events: none;
 }
 
+.stage.is-entering .hitbox,
+.stage.is-entering .audio-toggle {
+  pointer-events: none;
+}
+
 .inner-sanctum {
   position: absolute;
   inset: 0;

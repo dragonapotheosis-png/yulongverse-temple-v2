@@ -43,6 +43,7 @@ let audioContext = null;
 let currentAudio = null;
 let audioStarted = false;
 let transitionStarted = false;
+let isEnteringTemple = false;
 let volumeFadeFrame = null;
 let fortunes = [];
 let fortuneLoadPromise = null;
@@ -243,13 +244,14 @@ function toggleAudio(event) {
 }
 
 function enterTemple() {
-  if (transitionStarted) return;
+  if (isEnteringTemple || transitionStarted) return;
 
+  isEnteringTemple = true;
   transitionStarted = true;
   enterHitbox.setAttribute("aria-disabled", "true");
   playCurrentAudio().then(() => fadeCurrentVolume(0.18, 900));
 
-  stage.classList.add("is-transitioning");
+  stage.classList.add("is-entering", "is-transitioning");
 
   window.setTimeout(() => {
     stage.classList.add("is-transition-message");
@@ -260,7 +262,14 @@ function enterTemple() {
   }, 3600);
 
   window.setTimeout(() => {
-    window.location.hash = "jiaobei";
+    if (!isEnteringTemple) return;
+
+    if (window.location.hash !== "#jiaobei") {
+      window.location.hash = "jiaobei";
+      return;
+    }
+
+    showJiaobeiPage();
   }, 4500);
 }
 
@@ -376,11 +385,13 @@ async function castJiaobei() {
 function showJiaobeiPage() {
   stage.classList.add("is-jiaobei");
   stage.classList.remove(
+    "is-entering",
     "is-transitioning",
     "is-transition-message",
     "is-transition-leaving",
     "is-fortune",
   );
+  isEnteringTemple = false;
   transitionStarted = false;
   enterHitbox.removeAttribute("aria-disabled");
   resetJiaobeiFlow();
@@ -390,10 +401,12 @@ function showJiaobeiPage() {
 function showFortunePage() {
   stage.classList.add("is-jiaobei", "is-fortune");
   stage.classList.remove(
+    "is-entering",
     "is-transitioning",
     "is-transition-message",
     "is-transition-leaving",
   );
+  isEnteringTemple = false;
   transitionStarted = false;
   enterHitbox.removeAttribute("aria-disabled");
 
@@ -403,13 +416,17 @@ function showFortunePage() {
 }
 
 function showHomePage() {
+  if (isEnteringTemple) return;
+
   stage.classList.remove(
     "is-jiaobei",
     "is-fortune",
+    "is-entering",
     "is-transitioning",
     "is-transition-message",
     "is-transition-leaving",
   );
+  isEnteringTemple = false;
   transitionStarted = false;
   enterHitbox.removeAttribute("aria-disabled");
   applyPeriod(getPeriodKey());
