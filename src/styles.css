@@ -415,83 +415,124 @@ body {
   white-space: pre-line;
 }
 
+.stage.is-fortune .jiaobei-content {
+  display: flex;
+  min-height: 100%;
+  padding: 54px 24px 36px;
+}
+
+.stage.is-fortune .home-return,
+.stage.is-fortune .jiaobei-kicker,
+.stage.is-fortune .jiaobei-content > h1,
+.stage.is-fortune .jiaobei-cups,
+.stage.is-fortune .jiaobei-button,
+.stage.is-fortune .jiaobei-result {
+  display: none;
+}
+
 .fortune-scroll {
-  margin: 26px auto 0;
-  padding: 24px 22px 28px;
-  max-width: 340px;
+  position: relative;
+  width: min(100%, 350px);
+  min-height: calc(100svh - 90px);
+  margin: 0 auto;
+  padding: 34px 26px 24px;
+  display: flex;
+  flex-direction: column;
   text-align: left;
-  border: 1px solid rgba(198, 163, 92, 0.24);
+  border: 1px solid rgba(198, 163, 92, 0.18);
+  border-top-color: rgba(198, 163, 92, 0.32);
+  border-bottom-color: rgba(198, 163, 92, 0.32);
   background:
-    linear-gradient(180deg, rgba(77, 52, 26, 0.28), rgba(19, 13, 8, 0.52)),
-    rgba(9, 7, 5, 0.72);
+    linear-gradient(180deg, rgba(76, 55, 31, 0.28), rgba(12, 9, 7, 0.58)),
+    rgba(7, 6, 5, 0.62);
+  transform-origin: top center;
 }
 
 .fortune-scroll.is-visible {
-  animation: scrollReveal 900ms ease forwards;
+  animation: scrollReveal 1100ms ease forwards;
 }
 
 @keyframes scrollReveal {
   0% {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(12px) scaleY(0.96);
   }
 
   100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scaleY(1);
   }
 }
 
 .fortune-meta {
-  margin: 0 0 8px;
-  color: rgba(198, 163, 92, 0.62);
-  font-size: 13px;
-  letter-spacing: 1px;
+  margin: 0 0 14px;
+  color: rgba(198, 163, 92, 0.56);
+  font: 400 12px/1.4 "Songti SC", "STSong", "SimSun", serif;
+  letter-spacing: 2px;
+  text-align: center;
 }
 
 .fortune-scroll h2 {
   margin: 0;
-  color: rgba(241, 223, 170, 0.92);
-  font: 400 24px/1.35 "Songti SC", "STSong", "SimSun", serif;
+  color: rgba(241, 223, 170, 0.9);
+  font: 400 26px/1.45 "Songti SC", "STSong", "SimSun", serif;
+  letter-spacing: 2px;
+  text-align: center;
 }
 
 .fortune-energy {
-  margin: 8px 0 20px;
-  color: rgba(198, 163, 92, 0.72);
-  font-size: 14px;
+  margin: 9px 0 28px;
+  color: rgba(198, 163, 92, 0.62);
+  font: 400 13px/1.6 "Songti SC", "STSong", "SimSun", serif;
+  text-align: center;
 }
 
 .fortune-section {
-  margin-top: 18px;
+  margin-top: 24px;
 }
 
 .fortune-section h3 {
-  margin: 0 0 7px;
-  color: rgba(198, 163, 92, 0.7);
-  font: 400 13px/1.4 "Songti SC", "STSong", "SimSun", serif;
+  margin: 0 0 9px;
+  color: rgba(198, 163, 92, 0.58);
+  font: 400 12px/1.4 "Songti SC", "STSong", "SimSun", serif;
   letter-spacing: 2px;
 }
 
 .fortune-section p {
   margin: 0;
-  color: rgba(241, 223, 170, 0.78);
-  font: 400 15px/1.85 "Songti SC", "STSong", "SimSun", serif;
+  color: rgba(241, 223, 170, 0.8);
+  font: 400 15px/1.9 "Songti SC", "STSong", "SimSun", serif;
   white-space: pre-line;
+}
+
+.fortune-section:first-of-type {
+  margin-top: 0;
+  padding: 22px 0 24px;
+  border-top: 1px solid rgba(198, 163, 92, 0.16);
+  border-bottom: 1px solid rgba(198, 163, 92, 0.16);
+}
+
+.fortune-section:first-of-type p {
+  color: rgba(246, 229, 181, 0.88);
+  font-size: 17px;
+  line-height: 2.05;
+  letter-spacing: 1px;
 }
 
 .fortune-actions {
   display: flex;
   gap: 14px;
-  margin-top: 26px;
+  margin-top: auto;
+  padding-top: 30px;
 }
 
 .fortune-action {
   flex: 1;
-  padding: 10px 8px;
-  border: 1px solid rgba(198, 163, 92, 0.28);
-  background: rgba(8, 7, 6, 0.18);
-  color: rgba(241, 223, 170, 0.78);
-  font: 400 14px/1.2 "Songti SC", "STSong", "SimSun", serif;
+  padding: 9px 8px;
+  border: 1px solid rgba(198, 163, 92, 0.18);
+  background: transparent;
+  color: rgba(241, 223, 170, 0.62);
+  font: 400 13px/1.2 "Songti SC", "STSong", "SimSun", serif;
   letter-spacing: 1px;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
