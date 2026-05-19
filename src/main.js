@@ -32,6 +32,7 @@ const fortuneEnergy = document.querySelector("[data-fortune-energy]");
 const fortuneContent = document.querySelector("[data-fortune-content]");
 const fortuneInterpretation = document.querySelector("[data-fortune-interpretation]");
 const fortuneAdvice = document.querySelector("[data-fortune-advice]");
+const fortuneDebug = document.querySelector("[data-fortune-debug]");
 const returnHomeButton = document.querySelector("[data-return-home]");
 const returnTempleButton = document.querySelector("[data-return-temple]");
 const askAgainButton = document.querySelector("[data-ask-again]");
@@ -51,6 +52,8 @@ let jiaobeiStarted = false;
 let currentFortune = null;
 let previousFortuneId = "";
 let jiaobeiCastToken = 0;
+let lastFortuneDebug = null;
+const FORTUNES_DATA_SOURCE = "/data/fortunes.json?v=20260519";
 
 function getPeriodKey(date = new Date()) {
   const hour = date.getHours();
@@ -280,7 +283,9 @@ async function loadFortunes() {
   if (fortunes.length) return fortunes;
 
   if (!fortuneLoadPromise) {
-    fortuneLoadPromise = fetch("./data/fortunes.json")
+    fortuneLoadPromise = fetch(FORTUNES_DATA_SOURCE, {
+      cache: "no-store",
+    })
       .then((response) => {
         if (!response.ok) {
           throw new Error(`fortunes.json ${response.status}`);
@@ -293,6 +298,7 @@ async function loadFortunes() {
         console.log("[temple-fortune]", {
           event: "fortunes loaded",
           fortunesLength: fortunes.length,
+          dataSource: FORTUNES_DATA_SOURCE,
         });
 
         if (fortunes.length !== 72) {
@@ -314,7 +320,34 @@ async function loadFortunes() {
 }
 
 function setText(node, value) {
+  if (!node) return;
   node.textContent = value || "";
+}
+
+function setFortuneDebug(debugInfo) {
+  lastFortuneDebug = debugInfo;
+  if (!fortuneDebug) return;
+
+  fortuneDebug.textContent = [
+    `fortunes.length: ${debugInfo.fortunesLength}`,
+    `randomIndex: ${debugInfo.randomIndex}`,
+    `selectedFortune.id: ${debugInfo.selectedFortuneId}`,
+    `selectedFortune.title: ${debugInfo.selectedFortuneTitle}`,
+    `dataSource: ${debugInfo.dataSource}`,
+    `Date.now(): ${debugInfo.timestamp}`,
+  ].join("\n");
+}
+
+function getRandomIndex(max) {
+  if (max <= 0) return 0;
+
+  if (window.crypto?.getRandomValues) {
+    const values = new Uint32Array(1);
+    window.crypto.getRandomValues(values);
+    return values[0] % max;
+  }
+
+  return Math.floor(Math.random() * max);
 }
 
 function renderFortune(selectedFortune) {
@@ -340,23 +373,26 @@ function drawFortune() {
     return;
   }
 
-  let randomIndex = Math.floor(Math.random() * fortunes.length);
+  let randomIndex = getRandomIndex(fortunes.length);
   const selectedFortune = fortunes[randomIndex];
   if (fortunes.length > 1 && selectedFortune.id === previousFortuneId) {
-    randomIndex = (randomIndex + 1 + Math.floor(Math.random() * (fortunes.length - 1))) % fortunes.length;
+    randomIndex = (randomIndex + 1 + getRandomIndex(fortunes.length - 1)) % fortunes.length;
   }
 
   currentFortune = fortunes[randomIndex];
   previousFortuneId = currentFortune.id;
-
-  console.log("[temple-fortune]", {
+  const debugInfo = {
     event: "fortune selected",
     fortunesLength: fortunes.length,
     randomIndex,
     selectedFortuneId: currentFortune.id,
     selectedFortuneTitle: currentFortune.title,
+    dataSource: FORTUNES_DATA_SOURCE,
     timestamp: Date.now(),
-  });
+  };
+
+  console.log("[temple-fortune]", debugInfo);
+  setFortuneDebug(debugInfo);
 
   renderFortune(currentFortune);
 }
@@ -376,6 +412,8 @@ function resetJiaobeiFlow() {
   setText(fortuneContent, "");
   setText(fortuneInterpretation, "");
   setText(fortuneAdvice, "");
+  setText(fortuneDebug, "");
+  lastFortuneDebug = null;
   stage.classList.remove("is-fortune");
 }
 

@@ -493,6 +493,16 @@ body {
   text-align: center;
 }
 
+.fortune-debug {
+  margin: -14px 0 22px;
+  padding: 8px 10px;
+  border: 1px solid rgba(198, 163, 92, 0.18);
+  background: rgba(0, 0, 0, 0.28);
+  color: rgba(241, 223, 170, 0.56);
+  font: 11px/1.45 ui-monospace, SFMono-Regular, Consolas, monospace;
+  white-space: pre-wrap;
+}
+
 .fortune-section {
   margin-top: 24px;
 }
