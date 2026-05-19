@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>与龙同行 · 神庙</title>
+    <title>&#19982;&#40857;&#21516;&#34892; &#183; &#31070;&#24217;</title>
     <link rel="stylesheet" href="./src/styles.css" />
   </head>
   <body>
-    <main class="temple" aria-label="与龙同行 · 神庙">
-      <section class="stage" aria-label="神庙首页">
+    <main class="temple" aria-label="Yulongverse Temple">
+      <section class="stage" aria-label="Temple Home">
         <div class="background-layer background-a is-visible" aria-hidden="true"></div>
         <div class="background-layer background-b" aria-hidden="true"></div>
         <div class="lantern-glow lantern-glow-left" aria-hidden="true"></div>
@@ -16,27 +16,27 @@
         <div class="lantern-glow lantern-glow-center" aria-hidden="true"></div>
         <img class="smoke" src="./assets/effects/smoke.png" alt="" aria-hidden="true" />
 
-        <a class="hitbox hitbox-practice" href="#practice" aria-label="今日修行"></a>
-        <button class="hitbox hitbox-enter" type="button" data-enter aria-label="进入神庙"></button>
-        <a class="hitbox hitbox-scrolls" href="#scrolls" aria-label="卷轴阁"></a>
-        <button class="audio-toggle" type="button" data-audio-toggle aria-label="开启环境音">音</button>
+        <a class="hitbox hitbox-practice" href="#practice" aria-label="Practice"></a>
+        <button class="hitbox hitbox-enter" type="button" data-enter aria-label="Enter temple"></button>
+        <a class="hitbox hitbox-scrolls" href="#scrolls" aria-label="Scroll archive"></a>
+        <button class="audio-toggle" type="button" data-audio-toggle aria-label="Enable ambient audio">&#38899;</button>
 
         <div class="temple-transition" aria-hidden="true">
           <div class="transition-backdrop"></div>
-          <p class="transition-message">神庙从不急着回答你。</p>
+          <p class="transition-message">&#31070;&#24217;&#20174;&#19981;&#24613;&#30528;&#22238;&#31572;&#20320;&#12290;</p>
         </div>
 
-        <section class="jiaobei-page" aria-label="掷筊抽签">
+        <section class="jiaobei-page" aria-label="Jiaobei and fortune">
           <div class="inner-sanctum" aria-hidden="true"></div>
           <div class="jiaobei-content">
-            <button class="home-return" type="button" data-return-home aria-label="返回首页">返回首页</button>
-            <p class="jiaobei-kicker">内殿</p>
-            <h1>请静心后，再向天地询问。</h1>
+            <button class="home-return" type="button" data-return-home aria-label="Return">&#36820;&#22238;</button>
+            <p class="jiaobei-kicker">&#20869;&#27583;</p>
+            <h1>&#35831;&#38745;&#24515;&#21518;&#65292;&#20877;&#21521;&#22825;&#22320;&#35810;&#38382;&#12290;</h1>
             <div class="jiaobei-cups" aria-hidden="true">
               <span class="jiaobei-cup cup-left"></span>
               <span class="jiaobei-cup cup-right"></span>
             </div>
-            <button class="jiaobei-button" type="button" data-cast-jiaobei>掷筊</button>
+            <button class="jiaobei-button" type="button" data-cast-jiaobei>&#25527;&#31562;</button>
             <p class="jiaobei-result" data-jiaobei-result></p>
 
             <article class="fortune-scroll" data-fortune-scroll hidden>
@@ -44,16 +44,20 @@
               <h2 data-fortune-title></h2>
               <p class="fortune-energy" data-fortune-energy></p>
               <div class="fortune-section">
-                <h3>签诗正文</h3>
+                <h3>&#31614;&#35799;&#27491;&#25991;</h3>
                 <p data-fortune-content></p>
               </div>
               <div class="fortune-section">
-                <h3>白话解释</h3>
+                <h3>&#30333;&#35805;&#35299;&#37322;</h3>
                 <p data-fortune-interpretation></p>
               </div>
               <div class="fortune-section">
-                <h3>今日提醒</h3>
+                <h3>&#20170;&#26085;&#25552;&#37266;</h3>
                 <p data-fortune-advice></p>
+              </div>
+              <div class="fortune-actions">
+                <button class="fortune-action" type="button" data-return-temple>&#36820;&#22238;&#31070;&#24217;</button>
+                <button class="fortune-action" type="button" data-ask-again>&#20877;&#27714;&#19968;&#31614;</button>
               </div>
             </article>
           </div>

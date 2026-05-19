@@ -478,3 +478,26 @@ body {
   font: 400 15px/1.85 "Songti SC", "STSong", "SimSun", serif;
   white-space: pre-line;
 }
+
+.fortune-actions {
+  display: flex;
+  gap: 14px;
+  margin-top: 26px;
+}
+
+.fortune-action {
+  flex: 1;
+  padding: 10px 8px;
+  border: 1px solid rgba(198, 163, 92, 0.28);
+  background: rgba(8, 7, 6, 0.18);
+  color: rgba(241, 223, 170, 0.78);
+  font: 400 14px/1.2 "Songti SC", "STSong", "SimSun", serif;
+  letter-spacing: 1px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.fortune-action:active {
+  color: rgba(241, 223, 170, 0.92);
+  border-color: rgba(198, 163, 92, 0.42);
+}

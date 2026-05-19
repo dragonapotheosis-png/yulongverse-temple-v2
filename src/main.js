@@ -33,6 +33,8 @@ const fortuneContent = document.querySelector("[data-fortune-content]");
 const fortuneInterpretation = document.querySelector("[data-fortune-interpretation]");
 const fortuneAdvice = document.querySelector("[data-fortune-advice]");
 const returnHomeButton = document.querySelector("[data-return-home]");
+const returnTempleButton = document.querySelector("[data-return-temple]");
+const askAgainButton = document.querySelector("[data-ask-again]");
 
 let activePeriod = "";
 let visibleBackground = backgroundA;
@@ -308,6 +310,11 @@ function drawFortune() {
   setText(fortuneAdvice, fortune.advice);
   fortuneScroll.hidden = false;
   fortuneScroll.classList.add("is-visible");
+  stage.classList.add("is-fortune");
+
+  if (window.location.hash !== "#fortune") {
+    window.location.hash = "fortune";
+  }
 }
 
 function resetJiaobeiFlow() {
@@ -323,6 +330,7 @@ function resetJiaobeiFlow() {
   setText(fortuneContent, "");
   setText(fortuneInterpretation, "");
   setText(fortuneAdvice, "");
+  stage.classList.remove("is-fortune");
 }
 
 async function castJiaobei() {
@@ -347,28 +355,69 @@ async function castJiaobei() {
 }
 function showJiaobeiPage() {
   stage.classList.add("is-jiaobei");
+  stage.classList.remove(
+    "is-transitioning",
+    "is-transition-message",
+    "is-transition-leaving",
+    "is-fortune",
+  );
+  transitionStarted = false;
+  enterHitbox.removeAttribute("aria-disabled");
+  resetJiaobeiFlow();
   loadFortunes();
 }
 
-function showHomePage() {
+function showFortunePage() {
+  stage.classList.add("is-jiaobei", "is-fortune");
   stage.classList.remove(
-    "is-jiaobei",
     "is-transitioning",
     "is-transition-message",
     "is-transition-leaving",
   );
   transitionStarted = false;
   enterHitbox.removeAttribute("aria-disabled");
+
+  if (fortuneScroll.hidden) {
+    window.location.hash = "jiaobei";
+  }
+}
+
+function showHomePage() {
+  stage.classList.remove(
+    "is-jiaobei",
+    "is-fortune",
+    "is-transitioning",
+    "is-transition-message",
+    "is-transition-leaving",
+  );
+  transitionStarted = false;
+  enterHitbox.removeAttribute("aria-disabled");
+  applyPeriod(getPeriodKey());
   resetJiaobeiFlow();
 }
 
 function routeByHash() {
-  if (window.location.hash === "#jiaobei") {
+  const hash = window.location.hash || "#home";
+
+  if (hash === "#jiaobei") {
     showJiaobeiPage();
     return;
   }
 
+  if (hash === "#fortune") {
+    showFortunePage();
+    return;
+  }
+
   showHomePage();
+}
+
+function goHome() {
+  window.location.hash = "home";
+}
+
+function askAgain() {
+  window.location.hash = "jiaobei";
 }
 
 function startAudioFromPage(event) {
@@ -389,8 +438,10 @@ enterHitbox.addEventListener("click", enterTemple);
 audioToggle.addEventListener("click", toggleAudio);
 castJiaobeiButton.addEventListener("click", castJiaobei);
 returnHomeButton.addEventListener("click", () => {
-  window.location.hash = "";
+  goHome();
 });
+returnTempleButton.addEventListener("click", goHome);
+askAgainButton.addEventListener("click", askAgain);
 document.addEventListener("pointerdown", startAudioFromPage, { once: true, capture: true });
 window.addEventListener("hashchange", routeByHash);
 routeByHash();
