@@ -12,10 +12,12 @@ body {
 
 body {
   overflow: hidden;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .temple {
-  min-height: 100vh;
+  min-height: 100svh;
   display: grid;
   place-items: center;
   background: #050505;
@@ -25,7 +27,6 @@ body {
   position: relative;
   width: min(100vw, 430px);
   max-width: 430px;
-  height: 100vh;
   height: 100svh;
   margin: 0 auto;
   overflow: hidden;

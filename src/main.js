@@ -278,6 +278,17 @@ async function loadFortunes() {
       })
       .then((data) => {
         fortunes = Array.isArray(data) ? data : [];
+        console.log("[temple-fortune]", {
+          event: "fortunes loaded",
+          fortunesLength: fortunes.length,
+        });
+
+        if (fortunes.length !== 72) {
+          console.warn("[temple-fortune] fortunes length is not 72", {
+            fortunesLength: fortunes.length,
+          });
+        }
+
         return fortunes;
       })
       .catch((error) => {
@@ -301,13 +312,22 @@ function drawFortune() {
     return;
   }
 
-  const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
-  setText(fortuneId, fortune.id);
-  setText(fortuneTitle, fortune.title);
-  setText(fortuneEnergy, fortune.energy);
-  setText(fortuneContent, fortune.content);
-  setText(fortuneInterpretation, fortune.interpretation);
-  setText(fortuneAdvice, fortune.advice);
+  const randomIndex = Math.floor(Math.random() * fortunes.length);
+  const selectedFortune = fortunes[randomIndex];
+
+  console.log("[temple-fortune]", {
+    event: "fortune selected",
+    fortunesLength: fortunes.length,
+    selectedFortuneId: selectedFortune.id,
+    selectedFortuneTitle: selectedFortune.title,
+  });
+
+  setText(fortuneId, selectedFortune.id);
+  setText(fortuneTitle, selectedFortune.title);
+  setText(fortuneEnergy, selectedFortune.energy);
+  setText(fortuneContent, selectedFortune.content);
+  setText(fortuneInterpretation, selectedFortune.interpretation);
+  setText(fortuneAdvice, selectedFortune.advice);
   fortuneScroll.hidden = false;
   fortuneScroll.classList.add("is-visible");
   stage.classList.add("is-fortune");
