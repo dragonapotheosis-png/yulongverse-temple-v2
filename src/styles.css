@@ -303,6 +303,20 @@ body {
   text-align: center;
 }
 
+.home-return {
+  position: absolute;
+  left: 18px;
+  top: 18px;
+  padding: 6px 0;
+  border: 0;
+  background: transparent;
+  color: rgba(241, 223, 170, 0.58);
+  font: 400 13px/1.4 "Songti SC", "STSong", "SimSun", serif;
+  letter-spacing: 1px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
 .jiaobei-kicker {
   margin: 0 0 22px;
   color: rgba(198, 163, 92, 0.58);

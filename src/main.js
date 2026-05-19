@@ -32,6 +32,7 @@ const fortuneEnergy = document.querySelector("[data-fortune-energy]");
 const fortuneContent = document.querySelector("[data-fortune-content]");
 const fortuneInterpretation = document.querySelector("[data-fortune-interpretation]");
 const fortuneAdvice = document.querySelector("[data-fortune-advice]");
+const returnHomeButton = document.querySelector("[data-return-home]");
 
 let activePeriod = "";
 let visibleBackground = backgroundA;
@@ -309,6 +310,21 @@ function drawFortune() {
   fortuneScroll.classList.add("is-visible");
 }
 
+function resetJiaobeiFlow() {
+  jiaobeiStarted = false;
+  castJiaobeiButton.disabled = false;
+  jiaobeiPage.classList.remove("is-casting");
+  jiaobeiResult.textContent = "";
+  fortuneScroll.hidden = true;
+  fortuneScroll.classList.remove("is-visible");
+  setText(fortuneId, "");
+  setText(fortuneTitle, "");
+  setText(fortuneEnergy, "");
+  setText(fortuneContent, "");
+  setText(fortuneInterpretation, "");
+  setText(fortuneAdvice, "");
+}
+
 async function castJiaobei() {
   if (jiaobeiStarted) return;
 
@@ -334,10 +350,25 @@ function showJiaobeiPage() {
   loadFortunes();
 }
 
+function showHomePage() {
+  stage.classList.remove(
+    "is-jiaobei",
+    "is-transitioning",
+    "is-transition-message",
+    "is-transition-leaving",
+  );
+  transitionStarted = false;
+  enterHitbox.removeAttribute("aria-disabled");
+  resetJiaobeiFlow();
+}
+
 function routeByHash() {
   if (window.location.hash === "#jiaobei") {
     showJiaobeiPage();
+    return;
   }
+
+  showHomePage();
 }
 
 function startAudioFromPage(event) {
@@ -357,6 +388,9 @@ window.setInterval(() => {
 enterHitbox.addEventListener("click", enterTemple);
 audioToggle.addEventListener("click", toggleAudio);
 castJiaobeiButton.addEventListener("click", castJiaobei);
+returnHomeButton.addEventListener("click", () => {
+  window.location.hash = "";
+});
 document.addEventListener("pointerdown", startAudioFromPage, { once: true, capture: true });
 window.addEventListener("hashchange", routeByHash);
 routeByHash();
