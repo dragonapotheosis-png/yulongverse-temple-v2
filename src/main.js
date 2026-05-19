@@ -48,6 +48,9 @@ let volumeFadeFrame = null;
 let fortunes = [];
 let fortuneLoadPromise = null;
 let jiaobeiStarted = false;
+let currentFortune = null;
+let previousFortuneId = "";
+let jiaobeiCastToken = 0;
 
 function getPeriodKey(date = new Date()) {
   const hour = date.getHours();
@@ -314,23 +317,7 @@ function setText(node, value) {
   node.textContent = value || "";
 }
 
-function drawFortune() {
-  if (!fortunes.length) {
-    jiaobeiResult.textContent = "\u7b7e\u8bd7\u5c1a\u672a\u5907\u59a5\uff0c\n\u8bf7\u7a0d\u540e\u518d\u6765\u3002";
-    castJiaobeiButton.disabled = false;
-    return;
-  }
-
-  const randomIndex = Math.floor(Math.random() * fortunes.length);
-  const selectedFortune = fortunes[randomIndex];
-
-  console.log("[temple-fortune]", {
-    event: "fortune selected",
-    fortunesLength: fortunes.length,
-    selectedFortuneId: selectedFortune.id,
-    selectedFortuneTitle: selectedFortune.title,
-  });
-
+function renderFortune(selectedFortune) {
   setText(fortuneId, selectedFortune.id);
   setText(fortuneTitle, selectedFortune.title);
   setText(fortuneEnergy, selectedFortune.energy);
@@ -346,8 +333,38 @@ function drawFortune() {
   }
 }
 
+function drawFortune() {
+  if (!fortunes.length) {
+    jiaobeiResult.textContent = "\u7b7e\u8bd7\u5c1a\u672a\u5907\u59a5\uff0c\n\u8bf7\u7a0d\u540e\u518d\u6765\u3002";
+    castJiaobeiButton.disabled = false;
+    return;
+  }
+
+  let randomIndex = Math.floor(Math.random() * fortunes.length);
+  const selectedFortune = fortunes[randomIndex];
+  if (fortunes.length > 1 && selectedFortune.id === previousFortuneId) {
+    randomIndex = (randomIndex + 1 + Math.floor(Math.random() * (fortunes.length - 1))) % fortunes.length;
+  }
+
+  currentFortune = fortunes[randomIndex];
+  previousFortuneId = currentFortune.id;
+
+  console.log("[temple-fortune]", {
+    event: "fortune selected",
+    fortunesLength: fortunes.length,
+    randomIndex,
+    selectedFortuneId: currentFortune.id,
+    selectedFortuneTitle: currentFortune.title,
+    timestamp: Date.now(),
+  });
+
+  renderFortune(currentFortune);
+}
+
 function resetJiaobeiFlow() {
+  jiaobeiCastToken += 1;
   jiaobeiStarted = false;
+  currentFortune = null;
   castJiaobeiButton.disabled = false;
   jiaobeiPage.classList.remove("is-casting");
   jiaobeiResult.textContent = "";
@@ -366,6 +383,9 @@ async function castJiaobei() {
   if (jiaobeiStarted) return;
 
   jiaobeiStarted = true;
+  currentFortune = null;
+  const castToken = jiaobeiCastToken + 1;
+  jiaobeiCastToken = castToken;
   castJiaobeiButton.disabled = true;
   jiaobeiPage.classList.add("is-casting");
   jiaobeiResult.textContent = "";
@@ -375,10 +395,12 @@ async function castJiaobei() {
   await loadFortunes();
 
   window.setTimeout(() => {
+    if (castToken !== jiaobeiCastToken) return;
     jiaobeiResult.textContent = "\u5723\u7b4a\u5df2\u5e94\uff0c\n\u8bf7\u53d6\u4eca\u65e5\u4e4b\u7b7e\u3002";
   }, 1000);
 
   window.setTimeout(() => {
+    if (castToken !== jiaobeiCastToken) return;
     drawFortune();
   }, 1850);
 }
@@ -454,6 +476,8 @@ function goHome() {
 }
 
 function askAgain() {
+  currentFortune = null;
+  jiaobeiCastToken += 1;
   window.location.hash = "jiaobei";
 }
 
