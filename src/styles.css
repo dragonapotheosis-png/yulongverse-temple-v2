@@ -7,7 +7,7 @@ body {
   width: 100%;
   height: 100%;
   margin: 0;
-  background: #050403;
+  background: #050505;
 }
 
 body {
@@ -18,7 +18,7 @@ body {
   min-height: 100vh;
   display: grid;
   place-items: center;
-  background: #050403;
+  background: #050505;
 }
 
 .stage {
@@ -30,15 +30,15 @@ body {
   margin: 0 auto;
   overflow: hidden;
   isolation: isolate;
-  background: #050403;
+  background: #050505;
 }
 
 .background-layer {
   position: absolute;
   inset: 0;
   z-index: 1;
-  background-size: cover;
-  background-position: center;
+  background-size: contain;
+  background-position: center top;
   background-repeat: no-repeat;
   opacity: 0;
   transition: opacity 900ms ease;
