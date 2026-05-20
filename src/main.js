@@ -306,11 +306,23 @@ function enterTemple() {
     console.log("navigate to inner-temple");
 
     if (window.location.hash !== "#inner-temple") {
-      window.location.hash = "inner-temple";
-      return;
+      window.history.pushState(null, "", "#inner-temple");
     }
 
-    showSanctumPage();
+    showSanctumPage("menu", { keepTransition: true });
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        stage.classList.remove(
+          "is-entering",
+          "is-transitioning",
+          "is-transition-message",
+          "is-transition-leaving",
+        );
+        isEnteringTemple = false;
+        transitionStarted = false;
+        enterHitbox.removeAttribute("aria-disabled");
+      });
+    });
   }, 4500);
 }
 
@@ -521,19 +533,23 @@ function showFuturePanel() {
   futurePanel.hidden = false;
 }
 
-function showSanctumPage(mode = "menu") {
+function showSanctumPage(mode = "menu", options = {}) {
   stage.classList.add("is-sanctum");
-  stage.classList.remove(
-    "is-entering",
-    "is-transitioning",
-    "is-transition-message",
-    "is-transition-leaving",
-    "is-jiaobei",
-    "is-fortune",
-  );
-  isEnteringTemple = false;
-  transitionStarted = false;
-  enterHitbox.removeAttribute("aria-disabled");
+  if (options.keepTransition) {
+    stage.classList.remove("is-jiaobei", "is-fortune");
+  } else {
+    stage.classList.remove(
+      "is-entering",
+      "is-transitioning",
+      "is-transition-message",
+      "is-transition-leaving",
+      "is-jiaobei",
+      "is-fortune",
+    );
+    isEnteringTemple = false;
+    transitionStarted = false;
+    enterHitbox.removeAttribute("aria-disabled");
+  }
   resetJiaobeiFlow();
 
   if (mode === "practice") {
