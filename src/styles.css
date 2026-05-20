@@ -376,6 +376,30 @@ body {
   animation: cupFallRight 900ms ease-out forwards;
 }
 
+.jiaobei-page.is-result-sheng .cup-left {
+  transform: translateY(4px) rotate(-12deg);
+}
+
+.jiaobei-page.is-result-sheng .cup-right {
+  transform: translateY(4px) rotate(13deg);
+}
+
+.jiaobei-page.is-result-xiao .cup-left {
+  transform: translateY(4px) rotate(-12deg);
+}
+
+.jiaobei-page.is-result-xiao .cup-right {
+  transform: translateY(4px) rotate(-164deg);
+}
+
+.jiaobei-page.is-result-yin .cup-left {
+  transform: translateY(4px) rotate(168deg);
+}
+
+.jiaobei-page.is-result-yin .cup-right {
+  transform: translateY(4px) rotate(-164deg);
+}
+
 @keyframes cupFallLeft {
   0% {
     transform: translateY(-10px) rotate(-32deg);
