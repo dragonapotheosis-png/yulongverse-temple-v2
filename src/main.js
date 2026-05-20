@@ -38,6 +38,9 @@ const JIAOBEI_OUTCOMES = {
   },
 };
 const JIAOBEI_THROW_SOUND = "./audio/throw.mp3";
+const INNER_TEMPLE_FOOTSTEP_SOUND = "./audio/\u8fdb\u5165\u5185\u6bbf\u811a\u6b65\u58f0.mp3";
+const OUTER_AMBIENT_VOLUME = 0.3;
+const INNER_AMBIENT_VOLUME = 0.17;
 
 const backgroundA = document.querySelector(".background-a");
 const backgroundB = document.querySelector(".background-b");
@@ -151,7 +154,11 @@ function createCurrentAudio(period) {
   currentAudio = new Audio(period.audio);
   currentAudio.preload = "auto";
   currentAudio.loop = true;
-  currentAudio.volume = 0.3;
+  currentAudio.volume = stage?.classList.contains("is-home-hidden")
+    || stage?.classList.contains("is-sanctum")
+    || stage?.classList.contains("is-jiaobei")
+    ? INNER_AMBIENT_VOLUME
+    : OUTER_AMBIENT_VOLUME;
 
   currentAudio.addEventListener("loadedmetadata", () => {
     debugAudio("audio loadedmetadata", {
@@ -217,7 +224,11 @@ async function playCurrentAudio() {
   }
 
   try {
-    currentAudio.volume = 0.3;
+    currentAudio.volume = stage.classList.contains("is-home-hidden")
+      || stage.classList.contains("is-sanctum")
+      || stage.classList.contains("is-jiaobei")
+      ? INNER_AMBIENT_VOLUME
+      : OUTER_AMBIENT_VOLUME;
     currentAudio.loop = true;
     await currentAudio.play();
     audioStarted = true;
@@ -288,7 +299,7 @@ function enterTemple() {
   isEnteringTemple = true;
   transitionStarted = true;
   enterHitbox.setAttribute("aria-disabled", "true");
-  playCurrentAudio().then(() => fadeCurrentVolume(0.18, 900));
+  playCurrentAudio().then(() => fadeCurrentVolume(INNER_AMBIENT_VOLUME, 1500));
 
   stage.classList.add("is-home-hidden", "is-entering", "is-transitioning");
   console.log("hide home");
@@ -311,6 +322,7 @@ function enterTemple() {
       window.history.pushState(null, "", "#inner-temple");
     }
 
+    playInnerTempleFootsteps();
     showSanctumPage("menu", { keepTransition: true });
     console.log("inner-temple rendered");
     requestAnimationFrame(() => {
@@ -325,6 +337,7 @@ function enterTemple() {
         isEnteringTemple = false;
         transitionStarted = false;
         enterHitbox.removeAttribute("aria-disabled");
+        fadeCurrentVolume(INNER_AMBIENT_VOLUME, 1500);
       });
     });
   }, 4500);
@@ -388,6 +401,10 @@ function playTempleEffectSound(path, volume = 0.24) {
   sound.preload = "auto";
   sound.volume = volume;
   sound.play().catch(() => {});
+}
+
+function playInnerTempleFootsteps() {
+  playTempleEffectSound(INNER_TEMPLE_FOOTSTEP_SOUND, 0.35);
 }
 
 function playJiaobeiSound(outcomeKey) {
@@ -555,6 +572,7 @@ function showSanctumPage(mode = "menu", options = {}) {
     enterHitbox.removeAttribute("aria-disabled");
   }
   resetJiaobeiFlow();
+  fadeCurrentVolume(INNER_AMBIENT_VOLUME, 1500);
 
   if (mode === "practice") {
     showPracticePanel();
@@ -589,6 +607,7 @@ function showJiaobeiPage() {
   enterHitbox.removeAttribute("aria-disabled");
   resetJiaobeiFlow();
   loadFortunes();
+  fadeCurrentVolume(INNER_AMBIENT_VOLUME, 1500);
 }
 
 function showFortunePage() {
@@ -627,6 +646,7 @@ function showHomePage() {
   enterHitbox.removeAttribute("aria-disabled");
   applyPeriod(getPeriodKey());
   resetJiaobeiFlow();
+  fadeCurrentVolume(OUTER_AMBIENT_VOLUME, 1500);
 }
 
 function routeByHash() {
