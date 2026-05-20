@@ -239,6 +239,11 @@ body {
   opacity: 0.96;
 }
 
+.stage.is-light-transition .transition-backdrop {
+  opacity: 0.74;
+  transition-duration: 650ms;
+}
+
 .stage.is-transition-message .transition-message {
   visibility: visible;
   animation: messageFadeIn 1800ms ease forwards;

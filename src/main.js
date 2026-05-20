@@ -45,6 +45,8 @@ const INNER_AMBIENT_VOLUME = 0.16;
 const backgroundA = document.querySelector(".background-a");
 const backgroundB = document.querySelector(".background-b");
 const enterHitbox = document.querySelector("[data-enter]");
+const practiceHitbox = document.querySelector(".hitbox-practice");
+const scrollsHitbox = document.querySelector(".hitbox-scrolls");
 const audioToggle = document.querySelector("[data-audio-toggle]");
 const stage = document.querySelector(".stage");
 const sanctumPage = document.querySelector(".sanctum-page");
@@ -341,6 +343,51 @@ function enterTemple() {
       });
     });
   }, 4500);
+}
+
+function enterInnerArea(targetHash) {
+  if (isEnteringTemple || transitionStarted) return;
+
+  isEnteringTemple = true;
+  transitionStarted = true;
+  enterHitbox.setAttribute("aria-disabled", "true");
+  playCurrentAudio().then(() => fadeCurrentVolume(INNER_AMBIENT_VOLUME, 1500));
+
+  stage.classList.add("is-entering", "is-transitioning", "is-light-transition");
+
+  window.setTimeout(() => {
+    playInnerTempleFootsteps();
+  }, 260);
+
+  window.setTimeout(() => {
+    if (!isEnteringTemple) return;
+
+    stage.classList.add("is-home-hidden");
+    const normalizedHash = targetHash.startsWith("#") ? targetHash : `#${targetHash}`;
+    if (window.location.hash !== normalizedHash) {
+      window.history.pushState(null, "", normalizedHash);
+    }
+
+    if (normalizedHash === "#practice") {
+      showSanctumPage("practice", { keepTransition: true });
+    } else if (normalizedHash === "#scrolls") {
+      showSanctumPage("scrolls", { keepTransition: true });
+    } else if (normalizedHash === "#future") {
+      showSanctumPage("future", { keepTransition: true });
+    } else {
+      showSanctumPage("menu", { keepTransition: true });
+    }
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        stage.classList.remove("is-entering", "is-transitioning", "is-light-transition");
+        isEnteringTemple = false;
+        transitionStarted = false;
+        enterHitbox.removeAttribute("aria-disabled");
+        fadeCurrentVolume(INNER_AMBIENT_VOLUME, 1500);
+      });
+    });
+  }, 760);
 }
 
 async function loadFortunes() {
@@ -710,6 +757,14 @@ window.setInterval(() => {
 }, 30_000);
 
 enterHitbox.addEventListener("click", enterTemple);
+practiceHitbox.addEventListener("click", (event) => {
+  event.preventDefault();
+  enterInnerArea("practice");
+});
+scrollsHitbox.addEventListener("click", (event) => {
+  event.preventDefault();
+  enterInnerArea("scrolls");
+});
 audioToggle.addEventListener("click", toggleAudio);
 castJiaobeiButton.addEventListener("click", castJiaobei);
 openJiaobeiButton.addEventListener("click", () => {
