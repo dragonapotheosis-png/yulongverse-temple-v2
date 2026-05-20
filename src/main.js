@@ -2,18 +2,22 @@
   morning: {
     background: "./assets/baked/morning.png",
     audio: "./audio/dawn.mp3",
+    indoorAudio: "./audio/dawnindoor.mp3",
   },
   day: {
     background: "./assets/baked/day.png",
     audio: "./audio/day.mp3",
+    indoorAudio: "./audio/dayindoor.mp3",
   },
   dusk: {
     background: "./assets/baked/dusk.png",
     audio: "./audio/dusk.mp3",
+    indoorAudio: "./audio/duskindoor.mp3",
   },
   night: {
     background: "./assets/baked/night.png",
     audio: "./audio/night.mp3",
+    indoorAudio: "./audio/nightindoor.mp3",
   },
 };
 
@@ -79,10 +83,12 @@ let visibleBackground = backgroundA;
 let hiddenBackground = backgroundB;
 let audioContext = null;
 let currentAudio = null;
+let indoorAudio = null;
+let activeAudioSpace = "outdoor";
 let audioStarted = false;
 let transitionStarted = false;
 let isEnteringTemple = false;
-let volumeFadeFrame = null;
+let ambientFadeFrame = null;
 let fortunes = [];
 let fortuneLoadPromise = null;
 let jiaobeiStarted = false;
@@ -146,40 +152,66 @@ function setBackground(period) {
   hiddenBackground = previous;
 }
 
-function createCurrentAudio(period) {
-  if (currentAudio) {
-    currentAudio.pause();
-    currentAudio.removeAttribute("src");
-    currentAudio.load();
-  }
+function disposeAudio(audio) {
+  if (!audio) return;
+  audio.pause();
+  audio.removeAttribute("src");
+  audio.load();
+}
 
-  currentAudio = new Audio(period.audio);
-  currentAudio.preload = "auto";
-  currentAudio.loop = true;
-  currentAudio.volume = stage?.classList.contains("is-home-hidden")
+function createAmbientAudio(path, volume) {
+  const audio = new Audio(path);
+  audio.preload = "auto";
+  audio.loop = true;
+  audio.volume = volume;
+  audio.addEventListener("error", () => {
+    debugAudio("audio error", {
+      audioPath: path,
+      errorName: describeMediaError(audio.error),
+    });
+  });
+  audio.load();
+  return audio;
+}
+
+function createCurrentAudio(period) {
+  disposeAudio(currentAudio);
+  disposeAudio(indoorAudio);
+
+  const isInside = stage?.classList.contains("is-home-hidden")
     || stage?.classList.contains("is-sanctum")
-    || stage?.classList.contains("is-jiaobei")
-    ? INNER_AMBIENT_VOLUME
-    : OUTER_AMBIENT_VOLUME;
+    || stage?.classList.contains("is-jiaobei");
+  activeAudioSpace = isInside ? "indoor" : "outdoor";
+  currentAudio = createAmbientAudio(period.audio, isInside ? 0 : OUTER_AMBIENT_VOLUME);
+  indoorAudio = createAmbientAudio(period.indoorAudio, isInside ? INNER_AMBIENT_VOLUME : 0);
 
   currentAudio.addEventListener("loadedmetadata", () => {
     debugAudio("audio loadedmetadata", {
+      audioSpace: "outdoor",
       duration: currentAudio.duration,
     });
   });
 
   currentAudio.addEventListener("canplay", () => {
-    debugAudio("audio canplay");
+    debugAudio("audio canplay", {
+      audioSpace: "outdoor",
+    });
   });
 
-  currentAudio.addEventListener("error", () => {
-    debugAudio("audio error", {
-      errorName: describeMediaError(currentAudio.error),
+  indoorAudio.addEventListener("loadedmetadata", () => {
+    debugAudio("audio loadedmetadata", {
+      audioSpace: "indoor",
+      duration: indoorAudio.duration,
+    });
+  });
+
+  indoorAudio.addEventListener("canplay", () => {
+    debugAudio("audio canplay", {
+      audioSpace: "indoor",
     });
   });
 
   debugAudio("audio create");
-  currentAudio.load();
 }
 
 function applyPeriod(periodKey) {
@@ -213,7 +245,7 @@ async function unlockAudioContext() {
 }
 
 async function playCurrentAudio() {
-  if (!currentAudio) {
+  if (!currentAudio || !indoorAudio) {
     createCurrentAudio(PERIODS[activePeriod || getPeriodKey()]);
   }
 
@@ -226,13 +258,15 @@ async function playCurrentAudio() {
   }
 
   try {
-    currentAudio.volume = stage.classList.contains("is-home-hidden")
+    const isInside = stage.classList.contains("is-home-hidden")
       || stage.classList.contains("is-sanctum")
-      || stage.classList.contains("is-jiaobei")
-      ? INNER_AMBIENT_VOLUME
-      : OUTER_AMBIENT_VOLUME;
+      || stage.classList.contains("is-jiaobei");
+    activeAudioSpace = isInside ? "indoor" : "outdoor";
+    currentAudio.volume = isInside ? 0 : OUTER_AMBIENT_VOLUME;
+    indoorAudio.volume = isInside ? INNER_AMBIENT_VOLUME : 0;
     currentAudio.loop = true;
-    await currentAudio.play();
+    indoorAudio.loop = true;
+    await Promise.all([currentAudio.play(), indoorAudio.play()]);
     audioStarted = true;
     audioToggle.classList.add("is-on");
     audioToggle.setAttribute("aria-label", "Disable ambient audio");
@@ -248,37 +282,53 @@ async function playCurrentAudio() {
   }
 }
 
-function fadeCurrentVolume(target, duration = 800) {
-  if (!currentAudio) return;
+function crossfadeAmbience(targetSpace, duration = 1500) {
+  activeAudioSpace = targetSpace;
+  if (!currentAudio || !indoorAudio) return;
 
-  if (volumeFadeFrame) {
-    cancelAnimationFrame(volumeFadeFrame);
+  const targetOutdoorVolume = targetSpace === "outdoor" ? OUTER_AMBIENT_VOLUME : 0;
+  const targetIndoorVolume = targetSpace === "indoor" ? INNER_AMBIENT_VOLUME : 0;
+
+  if (!audioStarted) {
+    currentAudio.volume = targetOutdoorVolume;
+    indoorAudio.volume = targetIndoorVolume;
+    return;
   }
 
-  const start = currentAudio.volume;
+  if (ambientFadeFrame) {
+    cancelAnimationFrame(ambientFadeFrame);
+  }
+
+  currentAudio.play().catch(() => {});
+  indoorAudio.play().catch(() => {});
+  const startOutdoorVolume = currentAudio.volume;
+  const startIndoorVolume = indoorAudio.volume;
   const startedAt = performance.now();
 
   function tick(now) {
     const progress = Math.min((now - startedAt) / duration, 1);
-    currentAudio.volume = start + (target - start) * progress;
+    currentAudio.volume = startOutdoorVolume + (targetOutdoorVolume - startOutdoorVolume) * progress;
+    indoorAudio.volume = startIndoorVolume + (targetIndoorVolume - startIndoorVolume) * progress;
 
     if (progress < 1) {
-      volumeFadeFrame = requestAnimationFrame(tick);
+      ambientFadeFrame = requestAnimationFrame(tick);
       return;
     }
 
-    currentAudio.volume = target;
-    volumeFadeFrame = null;
+    currentAudio.volume = targetOutdoorVolume;
+    indoorAudio.volume = targetIndoorVolume;
+    ambientFadeFrame = null;
   }
 
-  volumeFadeFrame = requestAnimationFrame(tick);
+  ambientFadeFrame = requestAnimationFrame(tick);
 }
 
 function stopCurrentAudio() {
-  if (!currentAudio) return;
+  if (!currentAudio && !indoorAudio) return;
 
   audioStarted = false;
-  currentAudio.pause();
+  currentAudio?.pause();
+  indoorAudio?.pause();
   audioToggle.classList.remove("is-on");
   audioToggle.setAttribute("aria-label", "Enable ambient audio");
   debugAudio("audio paused");
@@ -301,7 +351,7 @@ function enterTemple() {
   isEnteringTemple = true;
   transitionStarted = true;
   enterHitbox.setAttribute("aria-disabled", "true");
-  playCurrentAudio().then(() => fadeCurrentVolume(INNER_AMBIENT_VOLUME, 1500));
+  playCurrentAudio().then(() => crossfadeAmbience("indoor", 1500));
 
   stage.classList.add("is-home-hidden", "is-entering", "is-transitioning");
   console.log("hide home");
@@ -339,7 +389,7 @@ function enterTemple() {
         isEnteringTemple = false;
         transitionStarted = false;
         enterHitbox.removeAttribute("aria-disabled");
-        fadeCurrentVolume(INNER_AMBIENT_VOLUME, 1500);
+        crossfadeAmbience("indoor", 1500);
       });
     });
   }, 4500);
@@ -351,7 +401,7 @@ function enterInnerArea(targetHash) {
   isEnteringTemple = true;
   transitionStarted = true;
   enterHitbox.setAttribute("aria-disabled", "true");
-  playCurrentAudio().then(() => fadeCurrentVolume(INNER_AMBIENT_VOLUME, 1500));
+  playCurrentAudio().then(() => crossfadeAmbience("indoor", 1500));
 
   stage.classList.add("is-entering", "is-transitioning", "is-light-transition");
 
@@ -384,7 +434,7 @@ function enterInnerArea(targetHash) {
         isEnteringTemple = false;
         transitionStarted = false;
         enterHitbox.removeAttribute("aria-disabled");
-        fadeCurrentVolume(INNER_AMBIENT_VOLUME, 1500);
+        crossfadeAmbience("indoor", 1500);
       });
     });
   }, 760);
@@ -619,7 +669,7 @@ function showSanctumPage(mode = "menu", options = {}) {
     enterHitbox.removeAttribute("aria-disabled");
   }
   resetJiaobeiFlow();
-  fadeCurrentVolume(INNER_AMBIENT_VOLUME, 1500);
+  crossfadeAmbience("indoor", 1500);
 
   if (mode === "practice") {
     showPracticePanel();
@@ -654,7 +704,7 @@ function showJiaobeiPage() {
   enterHitbox.removeAttribute("aria-disabled");
   resetJiaobeiFlow();
   loadFortunes();
-  fadeCurrentVolume(INNER_AMBIENT_VOLUME, 1500);
+  crossfadeAmbience("indoor", 1500);
 }
 
 function showFortunePage() {
@@ -693,7 +743,7 @@ function showHomePage() {
   enterHitbox.removeAttribute("aria-disabled");
   applyPeriod(getPeriodKey());
   resetJiaobeiFlow();
-  fadeCurrentVolume(OUTER_AMBIENT_VOLUME, 1500);
+  crossfadeAmbience("outdoor", 1500);
 }
 
 function routeByHash() {
