@@ -44,6 +44,17 @@ const backgroundB = document.querySelector(".background-b");
 const enterHitbox = document.querySelector("[data-enter]");
 const audioToggle = document.querySelector("[data-audio-toggle]");
 const stage = document.querySelector(".stage");
+const sanctumPage = document.querySelector(".sanctum-page");
+const sanctumMenu = document.querySelector("[data-sanctum-menu]");
+const practicePanel = document.querySelector("[data-practice-panel]");
+const scrollsPanel = document.querySelector("[data-scrolls-panel]");
+const futurePanel = document.querySelector("[data-future-panel]");
+const openJiaobeiButton = document.querySelector("[data-open-jiaobei]");
+const openPracticeButton = document.querySelector("[data-open-practice]");
+const openScrollsButton = document.querySelector("[data-open-scrolls]");
+const openFutureButton = document.querySelector("[data-open-future]");
+const sanctumHomeButton = document.querySelector("[data-sanctum-home]");
+const sanctumBackButtons = document.querySelectorAll("[data-sanctum-back]");
 const jiaobeiPage = document.querySelector(".jiaobei-page");
 const castJiaobeiButton = document.querySelector("[data-cast-jiaobei]");
 const jiaobeiResult = document.querySelector("[data-jiaobei-result]");
@@ -291,13 +302,15 @@ function enterTemple() {
 
   window.setTimeout(() => {
     if (!isEnteringTemple) return;
+    console.log("transition end");
+    console.log("navigate to inner-temple");
 
-    if (window.location.hash !== "#jiaobei") {
-      window.location.hash = "jiaobei";
+    if (window.location.hash !== "#inner-temple") {
+      window.location.hash = "inner-temple";
       return;
     }
 
-    showJiaobeiPage();
+    showSanctumPage();
   }, 4500);
 }
 
@@ -478,9 +491,73 @@ async function castJiaobei() {
     castJiaobeiButton.textContent = outcome.button;
   }, 1350);
 }
+
+function showSanctumMenu() {
+  console.log("render inner-temple");
+  sanctumMenu.hidden = false;
+  practicePanel.hidden = true;
+  scrollsPanel.hidden = true;
+  futurePanel.hidden = true;
+}
+
+function showPracticePanel() {
+  sanctumMenu.hidden = true;
+  practicePanel.hidden = false;
+  scrollsPanel.hidden = true;
+  futurePanel.hidden = true;
+}
+
+function showScrollsPanel() {
+  sanctumMenu.hidden = true;
+  practicePanel.hidden = true;
+  scrollsPanel.hidden = false;
+  futurePanel.hidden = true;
+}
+
+function showFuturePanel() {
+  sanctumMenu.hidden = true;
+  practicePanel.hidden = true;
+  scrollsPanel.hidden = true;
+  futurePanel.hidden = false;
+}
+
+function showSanctumPage(mode = "menu") {
+  stage.classList.add("is-sanctum");
+  stage.classList.remove(
+    "is-entering",
+    "is-transitioning",
+    "is-transition-message",
+    "is-transition-leaving",
+    "is-jiaobei",
+    "is-fortune",
+  );
+  isEnteringTemple = false;
+  transitionStarted = false;
+  enterHitbox.removeAttribute("aria-disabled");
+  resetJiaobeiFlow();
+
+  if (mode === "practice") {
+    showPracticePanel();
+    return;
+  }
+
+  if (mode === "scrolls") {
+    showScrollsPanel();
+    return;
+  }
+
+  if (mode === "future") {
+    showFuturePanel();
+    return;
+  }
+
+  showSanctumMenu();
+}
+
 function showJiaobeiPage() {
   stage.classList.add("is-jiaobei");
   stage.classList.remove(
+    "is-sanctum",
     "is-entering",
     "is-transitioning",
     "is-transition-message",
@@ -497,6 +574,7 @@ function showJiaobeiPage() {
 function showFortunePage() {
   stage.classList.add("is-jiaobei", "is-fortune");
   stage.classList.remove(
+    "is-sanctum",
     "is-entering",
     "is-transitioning",
     "is-transition-message",
@@ -515,6 +593,7 @@ function showHomePage() {
   if (isEnteringTemple) return;
 
   stage.classList.remove(
+    "is-sanctum",
     "is-jiaobei",
     "is-fortune",
     "is-entering",
@@ -531,6 +610,26 @@ function showHomePage() {
 
 function routeByHash() {
   const hash = window.location.hash || "#home";
+
+  if (hash === "#inner-temple" || hash === "#sanctum") {
+    showSanctumPage();
+    return;
+  }
+
+  if (hash === "#practice") {
+    showSanctumPage("practice");
+    return;
+  }
+
+  if (hash === "#scrolls") {
+    showSanctumPage("scrolls");
+    return;
+  }
+
+  if (hash === "#future") {
+    showSanctumPage("future");
+    return;
+  }
 
   if (hash === "#jiaobei") {
     showJiaobeiPage();
@@ -572,6 +671,24 @@ window.setInterval(() => {
 enterHitbox.addEventListener("click", enterTemple);
 audioToggle.addEventListener("click", toggleAudio);
 castJiaobeiButton.addEventListener("click", castJiaobei);
+openJiaobeiButton.addEventListener("click", () => {
+  window.location.hash = "jiaobei";
+});
+openPracticeButton.addEventListener("click", () => {
+  window.location.hash = "practice";
+});
+openScrollsButton.addEventListener("click", () => {
+  window.location.hash = "scrolls";
+});
+openFutureButton.addEventListener("click", () => {
+  window.location.hash = "future";
+});
+sanctumHomeButton.addEventListener("click", goHome);
+sanctumBackButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    window.location.hash = "inner-temple";
+  });
+});
 returnHomeButton.addEventListener("click", () => {
   goHome();
 });
