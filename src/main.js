@@ -244,7 +244,7 @@ async function unlockAudioContext() {
   source.start(0);
 }
 
-async function playCurrentAudio() {
+async function playCurrentAudio(startSpace = null) {
   if (!currentAudio || !indoorAudio) {
     createCurrentAudio(PERIODS[activePeriod || getPeriodKey()]);
   }
@@ -261,9 +261,10 @@ async function playCurrentAudio() {
     const isInside = stage.classList.contains("is-home-hidden")
       || stage.classList.contains("is-sanctum")
       || stage.classList.contains("is-jiaobei");
-    activeAudioSpace = isInside ? "indoor" : "outdoor";
-    currentAudio.volume = isInside ? 0 : OUTER_AMBIENT_VOLUME;
-    indoorAudio.volume = isInside ? INNER_AMBIENT_VOLUME : 0;
+    const startingSpace = startSpace || (isInside ? "indoor" : "outdoor");
+    activeAudioSpace = startingSpace;
+    currentAudio.volume = startingSpace === "outdoor" ? OUTER_AMBIENT_VOLUME : 0;
+    indoorAudio.volume = startingSpace === "indoor" ? INNER_AMBIENT_VOLUME : 0;
     currentAudio.loop = true;
     indoorAudio.loop = true;
     await Promise.all([currentAudio.play(), indoorAudio.play()]);
@@ -351,7 +352,7 @@ function enterTemple() {
   isEnteringTemple = true;
   transitionStarted = true;
   enterHitbox.setAttribute("aria-disabled", "true");
-  playCurrentAudio().then(() => crossfadeAmbience("indoor", 1500));
+  const audioReady = playCurrentAudio("outdoor");
 
   stage.classList.add("is-home-hidden", "is-entering", "is-transitioning");
   console.log("hide home");
@@ -360,6 +361,7 @@ function enterTemple() {
   window.setTimeout(() => {
     stage.classList.add("is-transition-message");
     playInnerTempleFootsteps();
+    audioReady.then(() => crossfadeAmbience("indoor", 1800));
   }, 800);
 
   window.setTimeout(() => {
@@ -389,7 +391,7 @@ function enterTemple() {
         isEnteringTemple = false;
         transitionStarted = false;
         enterHitbox.removeAttribute("aria-disabled");
-        crossfadeAmbience("indoor", 1500);
+        crossfadeAmbience("indoor", 1800);
       });
     });
   }, 4500);
@@ -401,12 +403,13 @@ function enterInnerArea(targetHash) {
   isEnteringTemple = true;
   transitionStarted = true;
   enterHitbox.setAttribute("aria-disabled", "true");
-  playCurrentAudio().then(() => crossfadeAmbience("indoor", 1500));
+  const audioReady = playCurrentAudio("outdoor");
 
   stage.classList.add("is-entering", "is-transitioning", "is-light-transition");
 
   window.setTimeout(() => {
     playInnerTempleFootsteps();
+    audioReady.then(() => crossfadeAmbience("indoor", 1800));
   }, 260);
 
   window.setTimeout(() => {
@@ -434,7 +437,7 @@ function enterInnerArea(targetHash) {
         isEnteringTemple = false;
         transitionStarted = false;
         enterHitbox.removeAttribute("aria-disabled");
-        crossfadeAmbience("indoor", 1500);
+        crossfadeAmbience("indoor", 1800);
       });
     });
   }, 760);
