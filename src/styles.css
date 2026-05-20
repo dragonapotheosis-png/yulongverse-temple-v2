@@ -681,6 +681,71 @@ body {
   white-space: pre-line;
 }
 
+.fortune-draw {
+  width: min(100%, 220px);
+  margin: 18px auto 0;
+  color: rgba(241, 223, 170, 0.72);
+  text-align: center;
+}
+
+.fortune-draw p {
+  margin: 0 0 14px;
+  font: 400 17px/1.6 "Songti SC", "STSong", "SimSun", serif;
+  letter-spacing: 1px;
+}
+
+.fortune-tube {
+  width: 82px;
+  height: 112px;
+  border: 1px solid rgba(198, 163, 92, 0.28);
+  border-radius: 42px 42px 18px 18px;
+  background:
+    linear-gradient(90deg, rgba(56, 36, 19, 0.58), rgba(142, 103, 48, 0.28), rgba(44, 28, 16, 0.62)),
+    rgba(12, 9, 6, 0.28);
+  box-shadow: inset 0 0 18px rgba(224, 178, 84, 0.08);
+  color: rgba(241, 223, 170, 0.72);
+  cursor: pointer;
+}
+
+.fortune-tube span {
+  display: block;
+  font: 400 30px/1 "Songti SC", "STSong", "SimSun", serif;
+  writing-mode: vertical-rl;
+  margin: 0 auto;
+  letter-spacing: 4px;
+}
+
+.fortune-tube:disabled {
+  cursor: default;
+  opacity: 0.68;
+}
+
+.fortune-draw.is-shaking .fortune-tube {
+  animation: fortuneTubeShake 920ms ease-in-out;
+}
+
+@keyframes fortuneTubeShake {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  24% {
+    transform: translateY(-5px) rotate(-4deg);
+  }
+
+  50% {
+    transform: translateY(2px) rotate(3deg);
+  }
+
+  76% {
+    transform: translateY(-2px) rotate(-2deg);
+  }
+
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
 .stage.is-fortune .jiaobei-content {
   display: flex;
   min-height: 100%;
@@ -692,7 +757,8 @@ body {
 .stage.is-fortune .jiaobei-content > h1,
 .stage.is-fortune .jiaobei-cups,
 .stage.is-fortune .jiaobei-button,
-.stage.is-fortune .jiaobei-result {
+.stage.is-fortune .jiaobei-result,
+.stage.is-fortune .fortune-draw {
   display: none;
 }
 

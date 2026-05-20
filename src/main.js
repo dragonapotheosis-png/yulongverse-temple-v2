@@ -43,6 +43,7 @@ const JIAOBEI_OUTCOMES = {
 };
 const JIAOBEI_THROW_SOUND = "./audio/throw.mp3";
 const INNER_TEMPLE_FOOTSTEP_SOUND = "./audio/\u8fdb\u5165\u5185\u6bbf\u811a\u6b65\u58f0.mp3";
+const FORTUNE_SHAKE_SOUNDS = ["./audio/\u6447\u7b7e\u7b521.mp3", "./audio/\u6447\u7b7e\u7b522.mp3"];
 const OUTER_AMBIENT_VOLUME = 0.3;
 const INNER_AMBIENT_VOLUME = 0.16;
 
@@ -67,6 +68,8 @@ const sanctumBackButtons = document.querySelectorAll("[data-sanctum-back]");
 const jiaobeiPage = document.querySelector(".jiaobei-page");
 const castJiaobeiButton = document.querySelector("[data-cast-jiaobei]");
 const jiaobeiResult = document.querySelector("[data-jiaobei-result]");
+const fortuneDraw = document.querySelector("[data-fortune-draw]");
+const drawFortuneButton = document.querySelector("[data-draw-fortune]");
 const fortuneScroll = document.querySelector("[data-fortune-scroll]");
 const fortuneId = document.querySelector("[data-fortune-id]");
 const fortuneTitle = document.querySelector("[data-fortune-title]");
@@ -97,6 +100,7 @@ let previousFortuneId = "";
 let jiaobeiCastToken = 0;
 let jiaobeiPhase = "ready";
 let currentJiaobeiOutcome = "";
+let fortuneDrawStarted = false;
 const FORTUNES_DATA_SOURCE = "/data/fortunes.json?v=20260519";
 
 function getPeriodKey(date = new Date()) {
@@ -511,6 +515,11 @@ function playJiaobeiSound(outcomeKey) {
   playTempleEffectSound(JIAOBEI_OUTCOMES[outcomeKey]?.sound, 0.24);
 }
 
+function playFortuneShakeSound() {
+  const soundPath = FORTUNE_SHAKE_SOUNDS[getRandomIndex(FORTUNE_SHAKE_SOUNDS.length)];
+  playTempleEffectSound(soundPath, 0.32);
+}
+
 function clearJiaobeiOutcomeClasses() {
   jiaobeiPage.classList.remove("is-result-sheng", "is-result-xiao", "is-result-yin");
 }
@@ -555,8 +564,13 @@ function resetJiaobeiFlow() {
   jiaobeiPhase = "ready";
   currentJiaobeiOutcome = "";
   currentFortune = null;
+  fortuneDrawStarted = false;
   castJiaobeiButton.disabled = false;
+  castJiaobeiButton.hidden = false;
   castJiaobeiButton.textContent = "\u63b7\u7b4a";
+  drawFortuneButton.disabled = false;
+  fortuneDraw.hidden = true;
+  fortuneDraw.classList.remove("is-shaking");
   jiaobeiPage.classList.remove("is-casting");
   clearJiaobeiOutcomeClasses();
   jiaobeiResult.textContent = "";
@@ -576,9 +590,7 @@ async function castJiaobei() {
 
   if (jiaobeiPhase === "result") {
     if (currentJiaobeiOutcome === "sheng") {
-      castJiaobeiButton.disabled = true;
-      await loadFortunes();
-      drawFortune();
+      beginFortuneDraw();
       return;
     }
 
@@ -620,9 +632,32 @@ async function castJiaobei() {
     if (castToken !== jiaobeiCastToken) return;
     jiaobeiStarted = false;
     jiaobeiPhase = "result";
-    castJiaobeiButton.disabled = false;
-    castJiaobeiButton.textContent = outcome.button;
+    if (currentJiaobeiOutcome === "sheng") {
+      castJiaobeiButton.hidden = true;
+      fortuneDraw.hidden = false;
+      drawFortuneButton.disabled = false;
+    } else {
+      castJiaobeiButton.disabled = false;
+      castJiaobeiButton.textContent = outcome.button;
+    }
   }, 1350);
+}
+
+async function beginFortuneDraw() {
+  if (fortuneDrawStarted || jiaobeiPhase !== "result" || currentJiaobeiOutcome !== "sheng") return;
+
+  fortuneDrawStarted = true;
+  drawFortuneButton.disabled = true;
+  fortuneDraw.classList.add("is-shaking");
+  playFortuneShakeSound();
+  await loadFortunes();
+
+  const drawDelay = 800 + Math.floor(Math.random() * 401);
+  window.setTimeout(() => {
+    fortuneDraw.classList.remove("is-shaking");
+    fortuneDraw.hidden = true;
+    drawFortune();
+  }, drawDelay);
 }
 
 function showSanctumMenu() {
@@ -820,6 +855,7 @@ scrollsHitbox.addEventListener("click", (event) => {
 });
 audioToggle.addEventListener("click", toggleAudio);
 castJiaobeiButton.addEventListener("click", castJiaobei);
+drawFortuneButton.addEventListener("click", beginFortuneDraw);
 openJiaobeiButton.addEventListener("click", () => {
   window.location.hash = "jiaobei";
 });
