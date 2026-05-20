@@ -91,6 +91,7 @@ let activeAudioSpace = "outdoor";
 let audioStarted = false;
 let transitionStarted = false;
 let isEnteringTemple = false;
+let isReturningTemple = false;
 let ambientFadeFrame = null;
 let fortunes = [];
 let fortuneLoadPromise = null;
@@ -511,6 +512,10 @@ function playInnerTempleFootsteps() {
   playTempleEffectSound(INNER_TEMPLE_FOOTSTEP_SOUND, 0.35);
 }
 
+function playOuterTempleFootsteps() {
+  playTempleEffectSound(INNER_TEMPLE_FOOTSTEP_SOUND, 0.18);
+}
+
 function playJiaobeiSound(outcomeKey) {
   playTempleEffectSound(JIAOBEI_OUTCOMES[outcomeKey]?.sound, 0.24);
 }
@@ -821,7 +826,25 @@ function routeByHash() {
 }
 
 function goHome() {
-  window.location.hash = "home";
+  const isInsideTemple = stage.classList.contains("is-home-hidden")
+    || stage.classList.contains("is-sanctum")
+    || stage.classList.contains("is-jiaobei");
+
+  if (!isInsideTemple || isReturningTemple) {
+    window.location.hash = "home";
+    return;
+  }
+
+  isReturningTemple = true;
+  playOuterTempleFootsteps();
+  playCurrentAudio("indoor").then(() => crossfadeAmbience("outdoor", 1800));
+
+  window.setTimeout(() => {
+    window.location.hash = "home";
+    window.setTimeout(() => {
+      isReturningTemple = false;
+    }, 200);
+  }, 650);
 }
 
 function askAgain() {
