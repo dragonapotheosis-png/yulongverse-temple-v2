@@ -196,6 +196,14 @@ body {
   border-color: rgba(241, 223, 170, 0.34);
 }
 
+.stage.is-home-hidden .background-layer,
+.stage.is-home-hidden .lantern-glow,
+.stage.is-home-hidden .smoke,
+.stage.is-home-hidden .hitbox,
+.stage.is-home-hidden .audio-toggle {
+  visibility: hidden;
+}
+
 .temple-transition {
   position: absolute;
   inset: 0;

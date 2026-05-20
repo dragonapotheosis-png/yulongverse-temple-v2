@@ -290,7 +290,9 @@ function enterTemple() {
   enterHitbox.setAttribute("aria-disabled", "true");
   playCurrentAudio().then(() => fadeCurrentVolume(0.18, 900));
 
-  stage.classList.add("is-entering", "is-transitioning");
+  stage.classList.add("is-home-hidden", "is-entering", "is-transitioning");
+  console.log("hide home");
+  console.log("transition overlay active");
 
   window.setTimeout(() => {
     stage.classList.add("is-transition-message");
@@ -303,15 +305,17 @@ function enterTemple() {
   window.setTimeout(() => {
     if (!isEnteringTemple) return;
     console.log("transition end");
-    console.log("navigate to inner-temple");
+    console.log("route to inner-temple");
 
     if (window.location.hash !== "#inner-temple") {
       window.history.pushState(null, "", "#inner-temple");
     }
 
     showSanctumPage("menu", { keepTransition: true });
+    console.log("inner-temple rendered");
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
+        console.log("overlay fade out");
         stage.classList.remove(
           "is-entering",
           "is-transitioning",
@@ -609,6 +613,7 @@ function showHomePage() {
   if (isEnteringTemple) return;
 
   stage.classList.remove(
+    "is-home-hidden",
     "is-sanctum",
     "is-jiaobei",
     "is-fortune",
