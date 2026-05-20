@@ -40,7 +40,7 @@ const JIAOBEI_OUTCOMES = {
 const JIAOBEI_THROW_SOUND = "./audio/throw.mp3";
 const INNER_TEMPLE_FOOTSTEP_SOUND = "./audio/\u8fdb\u5165\u5185\u6bbf\u811a\u6b65\u58f0.mp3";
 const OUTER_AMBIENT_VOLUME = 0.3;
-const INNER_AMBIENT_VOLUME = 0.17;
+const INNER_AMBIENT_VOLUME = 0.16;
 
 const backgroundA = document.querySelector(".background-a");
 const backgroundB = document.querySelector(".background-b");
@@ -307,6 +307,7 @@ function enterTemple() {
 
   window.setTimeout(() => {
     stage.classList.add("is-transition-message");
+    playInnerTempleFootsteps();
   }, 800);
 
   window.setTimeout(() => {
@@ -322,7 +323,6 @@ function enterTemple() {
       window.history.pushState(null, "", "#inner-temple");
     }
 
-    playInnerTempleFootsteps();
     showSanctumPage("menu", { keepTransition: true });
     console.log("inner-temple rendered");
     requestAnimationFrame(() => {

@@ -153,25 +153,24 @@ body {
 }
 
 .hitbox-enter {
-  left: 50%;
-  top: 610px;
-  width: 124px;
-  height: 110px;
-  transform: translateX(-50%);
+  left: 36%;
+  bottom: 16%;
+  width: 28%;
+  height: 20%;
 }
 
 .hitbox-practice {
-  left: 28px;
-  bottom: 88px;
-  width: 142px;
-  height: 130px;
+  left: 6%;
+  bottom: 8%;
+  width: 28%;
+  height: 13%;
 }
 
 .hitbox-scrolls {
-  right: 28px;
-  bottom: 88px;
-  width: 142px;
-  height: 130px;
+  right: 6%;
+  bottom: 8%;
+  width: 28%;
+  height: 13%;
 }
 
 .audio-toggle {
